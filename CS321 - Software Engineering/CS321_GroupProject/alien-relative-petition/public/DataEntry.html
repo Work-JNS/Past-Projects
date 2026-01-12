@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Petition Data Entry</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #71aae3;
+      margin: 0;
+      padding: 2rem;
+    }
+
+    .page-container {
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      gap: 2rem;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    /* Common Box Styles */
+    .queue-container,
+    .petition-container,
+    .form-container {
+      flex: 1;
+      border: 2px solid #ccc;
+      border-radius: 10px;
+      background-color: white;
+      padding: 1.5rem;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Headers */
+    .queue-header,
+    .petition-header,
+    .form-header {
+      text-align: center;
+      font-size: 1.5rem;
+      margin-bottom: 1rem;
+      font-weight: bold;
+    }
+
+    /* Queue List */
+    .queue-list {
+      list-style-type: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .queue-list li {
+      background-color: #f1f1f1;
+      margin-bottom: 0.5rem;
+      padding: 0.7rem;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background-color 0.2s ease;
+    }
+
+    .queue-list li:hover {
+      background-color: #dbeafe;
+    }
+
+    /* Petition Image */
+    .petition-image {
+      width: 100%;
+      height: auto;
+      border-radius: 8px;
+      border: 1px solid #ddd;
+      display: block;
+      margin: 0 auto;
+    }
+
+    /* Form */
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    label {
+      font-weight: bold;
+      margin-bottom: 0.3rem;
+    }
+
+    input,
+    textarea {
+      padding: 0.5rem;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      font-size: 1rem;
+      width: 100%;
+    }
+
+  
+    select {
+      width: 95%;
+      max-width: 100%;
+      margin-bottom: 10px;
+    }
+
+    button {
+      background-color: #007bff;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      padding: 0.7rem 1rem;
+      font-size: 1rem;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #0056b3;
+    }
+
+    .petition-list li {
+      list-style: none;
+      margin-bottom: 0.5rem;
+    }
+
+    .petition-list a {
+      display: block; /* makes link fill the entire box area */
+      padding: 10px 15px;
+      border-radius: 6px;
+      background-color: #f4f4f4;
+      text-decoration: none;
+      color: #333;
+      transition: background-color 0.2s ease;
+    }
+
+    .petition-list a:hover {
+      background-color: #e0e0e0;  /* highlight when hovering */
+    }
+
+  </style>
+</head>
+<body>
+  <div class="page-container">
+
+    <!-- Left: Queue List -->
+    <div class="queue-container">
+      <div class="queue-header">Form Queue</div>
+      <ul class="queue-list">
+        <li><a href="/view-petition?id=101">Petition #101  Status: Open</a></li>
+        <li><a href="/view-petition?id=102">Petition #102  Status: Open</a></li>
+        <li><a href="/view-petition?id=103">Petition #103  Status: Pending Review</a></li>
+      </ul>
+    </div>
+
+    <!-- Middle: Petition Image -->
+    <div class="petition-container">
+      <div class="petition-header">Petition Form</div>
+      <img
+        src="petition-sample.jpg"
+        alt="Sample Petition"
+        class="petition-image"
+      />
+    </div>
+
+    <!-- Right: Data Entry Form -->
+    <div class="form-container">
+      <div class="form-header">Data Entry Form</div>
+      <form id="petitionForm" action="/alien-relative-petition-domain/DEnewImmForm" method="post">
+
+        <!-- Petitioner Information Section -->
+        <fieldset class="form-section">
+        <legend>Petitioner Information</legend>
+
+        <div>
+          <label for="petitionerFirstName">First Name</label>
+          <input type="text" id="petitionerFirstName" name="petitionerFirstName" required />
+        </div>
+
+        <div>
+          <label for="petitionerLastName">Last Name</label>
+          <input type="text" id="petitionerLastName" name="petitionerLastName" required />
+        </div>
+
+        <div>
+          <label for="petitionerDOB">Date of Birth</label>
+          <input type="date" id="petitionerDOB" name="petitionerDOB" placeholder="YYYY-MM-DD" />
+        </div>
+
+        <div>
+          <label for="petitionerANumm">A-Number</label>
+          <input type="text" id="petitionerANumm" name="petitionerANumm" />
+        </div>
+
+      </fieldset>
+
+      <!-- Dependent Information Section -->
+      <fieldset class="form-section">
+        <legend>Dependent Information</legend>
+
+        <div>
+          <label for="dependentFirstName">First Name</label>
+          <input type="text" id="dependentFirstName" name="dependentFirstName" />
+        </div>
+
+        <div>
+          <label for="dependentLastName">Last Name</label>
+          <input type="text" id="dependentLastName" name="dependentLastName" />
+        </div>
+      
+       <div>
+          <label for="dependentDOB">Date of Birth</label>
+          <input type="date" id="dependentDOB" name="dependentDOB" placeholder="YYYY-MM-DD" />
+       </div>
+
+       <div>
+          <label for="dependentANumm">A-Number</label>
+          <input type="text" id="dependentANumm" name="dependentANumm" />
+        </div>
+
+     </fieldset>
+
+     <button type="submit">Submit Petition</button>
+   </form>
+  </div>
+
+  </div>
+</body>
+</html>

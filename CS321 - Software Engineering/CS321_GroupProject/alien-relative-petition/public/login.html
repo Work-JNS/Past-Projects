@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Navigation Menu</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            background: linear-gradient(135deg, #000000 0%, #16213e 100%);
+        }
+        
+        .container {
+            background: #292a2bb6;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+            text-align: center;
+        }
+        
+        h1 {
+            color: #f3f3f3;
+            margin-bottom: 30px;
+        }
+        
+        .button-group {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        
+        button {
+            padding: 15px 30px;
+            font-size: 18px;
+            font-weight: bold;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+        
+        button:active {
+            transform: translateY(0);
+        }
+        
+        .data-entry {
+            background: #828282;
+        }
+        
+        .data-entry:hover {
+            background: #45a049;
+        }
+        
+        .review {
+            background: #828282;
+        }
+        
+        .review:hover {
+            background: #0b7dda;
+        }
+        
+        .approval {
+            background: #828282;
+        }
+        
+        .approval:hover {
+            background: #e68900;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Workflow Navigation</h1>
+        <div class="button-group">
+            <button class="data-entry" onclick="window.location.href='DataEntry.html'">
+                Data Entry
+            </button>
+            <button class="review" onclick="window.location.href='reviewer.html'">
+                Review
+            </button>
+            <button class="approval" onclick="window.location.href='approver.html'">
+                Approval
+            </button>
+        </div>
+    </div>
+</body>
+</html>

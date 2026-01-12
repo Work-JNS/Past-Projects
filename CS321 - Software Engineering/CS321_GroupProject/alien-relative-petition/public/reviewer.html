@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Petition Review Screen</title>
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300,300italic,400italic,600' rel='stylesheet'
+        type='text/css'>
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700" rel="stylesheet">
+    <style>
+        html,
+        body {
+            height: 100%;
+            margin-left: 1%;
+            font-family: Roboto, Arial, sans-serif;
+            font-size: 16px;
+            color: #eee;
+            background-color: #2d2d2d;
+        }
+
+        form {
+            width: 20%;
+            display: flex;
+            justify-content: flex-start;
+            margin-top: 30px;
+        }
+
+        input[type="submit"] {
+            font-size: 16px;
+            font-weight: 600;
+            color: #fff;
+            background-color: #1c87c9;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            display: inline-block;
+            white-space: nowrap;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #095484;
+            transform: translateY(-2px);
+        }
+
+        input,
+        select {
+            padding: 10px;
+            margin-bottom: 15px;
+            background: transparent;
+            border: none;
+            border-bottom: 2px solid #eee;
+            width: 100%;
+            color: #eee;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Welcome Reviewer! Load your workflow below to begin form reviews.</h1>
+
+    <form action="/alien-relative-petition-domain/reviewImmForm" method="GET">
+        <input type="submit" value="Load Workflow">
+    </form>
+</body>
+
+</html>
