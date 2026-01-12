@@ -1,0 +1,15 @@
+
+total 900
+drwxr-xr-x. 5 jsingh51 itestudent    227 Nov 15 11:25 .
+drwxr-sr-x. 6 jsingh51 itestudent     68 Oct 29 11:02 ..
+-rw-r--r--. 1 jsingh51 itestudent 735008 Oct 29 10:52 F24_P3_Documentation.pdf
+-rw-r--r--. 1 jsingh51 itestudent     51 Nov  6 13:24 fox.txt
+drwxr-xr-x. 2 jsingh51 itestudent     86 Oct 29 11:02 inc
+-rw-r--r--. 1 jsingh51 itestudent   2613 Oct 12 20:49 Makefile
+-rwxr-xr-x. 1 jsingh51 users       21560 Nov  6 13:18 my_echo
+-rwxr-xr-x. 1 jsingh51 users       23200 Nov  6 13:18 my_pause
+drwxr-xr-x. 2 jsingh51 itestudent     86 Nov 15 11:16 obj
+-rw-r--r--. 1 jsingh51 users           1 Nov 15 11:25 out.txt
+-rwxr-xr-x. 1 jsingh51 users       22152 Nov  6 13:18 slow_cooker
+drwxr-xr-x. 2 jsingh51 itestudent    154 Oct 29 11:02 src
+-rwxr-xr-x. 1 jsingh51 users       97872 Nov 15 11:16 zaku
