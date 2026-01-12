@@ -1,0 +1,137 @@
+Script started on 2024-03-19 12:11:29-04:00
+bash-4.4$ uname -a
+Linux zeus-1.cec.gmu.edu 4.18.0-348.23.1.el8_5.x86_64 #1 SMP Tue Apr 12 11:20:32 EDT 2022 x86_64 x86_64 x86_64 GNU/Linux
+bash-4.4$ pwe[Kd
+/home/jsingh51/CS262/lab7_jsingh51_201
+bash-4.4$ ls
+input.txt  lab7_jsingh51_201  lab7_jsingh51_201.c  lab7_typescript_jsingh51_201  Makefile  out.txt
+bash-4.4$ make clae[K[Kean
+rm lab7_jsingh51_201
+bash-4.4$ ls
+input.txt  lab7_jsingh51_201.c	lab7_typescript_jsingh51_201  Makefile	out.txt
+bash-4.4$ rm out.txt 
+bash-4.4$ ls
+input.txt  lab7_jsingh51_201.c	lab7_typescript_jsingh51_201  Makefile
+bash-4.4$ cat ma[K[KMakefile 
+#Jared Singh, G01416039
+#CS 262, Lab Section 201
+#Lab7
+CC = gcc
+LIBS = -lm
+TARGET = lab7_jsingh51_201
+CFLAGS = -g -Wall -std=c99 -pedantic-errors
+all: $(TARGET).c
+	$(CC) $(TARGET).c -o $(TARGET) $(CFLAGS) $(LIBS)
+lab6: $(TARGET).c
+	$(CC) $(TARGET).c -o $(TARGET) $(CFLAGS) $(LIBS)
+clean:
+	rm $(TARGET)
+bash-4.4$ cat lab7_jsingh51_201.c 
+/*
+    Jared Singh, G01416039
+    CS 262, Lab Section 201
+    Lab7
+
+    Takes a formatted input file from CLA & a filename for output
+    formats and writes to output file
+
+*/
+
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+
+int main(int argc, char *argv[])
+{
+    char buffer[50];
+    int ln;
+
+    // Incorrect File Errors
+    if (argc < 3)
+    {
+        printf("Incorrect number of files\n");
+        exit(1);
+    }
+
+    FILE *input = fopen(argv[1], "r");
+    FILE *output = fopen(argv[2], "w");
+
+    //Checks if files are open
+    if (input == NULL || output == NULL)
+    {
+        printf("file opening error");
+        exit(1);
+    }
+
+    // get line num
+    fgets(buffer, 50, input);
+    sscanf(buffer, "%d", &ln);
+
+    char Data[ln][6][20];
+    char nm[20];
+    char lnm[10];
+
+    // read data from file
+    for (int i = 0; i < ln; i++)
+    {
+        fgets(buffer, 50, input);
+        sscanf(buffer, "%s %s %s %s %s %s %s", Data[i][0], nm, lnm,
+               Data[i][2], Data[i][3], Data[i][4], Data[i][5]);
+
+        strcat(nm, " ");
+        lnm[strlen(lnm) - 1] = '\0';
+        strcat(nm, lnm);
+        strcpy(Data[i][1], nm);
+    }
+    fclose(input);
+
+    // format Data
+    for (int i = 0; i < ln; i++)
+    {
+        char temp[20];
+        // Name to pos1, gnum to pos2
+        strcpy(temp, Data[i][0]);
+        strcpy(Data[i][0], Data[i][1]);
+        strcpy(Data[i][1], temp);
+
+        // Semester to pos6, Grade to pos3
+        strcpy(temp, Data[i][2]);
+        strcpy(Data[i][2], Data[i][5]);
+        strcpy(Data[i][5], temp);
+    }
+
+    // write data
+    for (int i = 0; i < ln; i++)
+    {
+        fprintf(output, "%-20s", Data[i][0]);
+        fprintf(output, "%-10s", Data[i][1]);
+        fprintf(output, "%-8.2f", atof(Data[i][2]));
+        fprintf(output, "%-10s", Data[i][3]);
+        fprintf(output, "%-3s", Data[i][4]);
+        fprintf(output, "%-3s\n", Data[i][5]);
+    }
+}
+bash-4.4$ make
+gcc lab7_jsingh51_201.c -o lab7_jsingh51_201 -g -Wall -std=c99 -pedantic-errors -lm
+bash-4.4$ ./lab7_jsingh51_201 
+Incorrect number of files
+bash-4.4$ ./lab7_jsingh51_201 input.txt 
+Incorrect number of files
+bash-4.4$ ./lab7_jsingh51_201 input.txt out.txt
+bash-4.4$ ls
+input.txt  lab7_jsingh51_201  lab7_jsingh51_201.c  lab7_typescript_jsingh51_201  Makefile  out.txt
+bash-4.4$ cat out,[K.txt 
+Iron Man            1134970   9.97    CS500     4  5  
+Captain America     1156731   8.79    CS262     3  2  
+Black Widow         1070965   8.35    CS310     3  3  
+Clint Barton        1133656   6.89    CS440     4  5  
+Nick Fury           1259273   4.68    CS101     2  1  
+Wanda Maximoff      1284367   7.98    CS367     4  3  
+bash-4.4$ make clae[K[Kean
+rm lab7_jsingh51_201
+bash-4.4$ ls
+input.txt  lab7_jsingh51_201.c	lab7_typescript_jsingh51_201  Makefile	out.txt
+bash-4.4$ exti\\[K[K[Ki[K[Kit
+exit
+
+Script done on 2024-03-19 12:13:32-04:00

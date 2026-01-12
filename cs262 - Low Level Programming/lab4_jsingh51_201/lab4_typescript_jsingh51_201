@@ -1,0 +1,142 @@
+Script started on 2024-02-09 12:23:29-05:00
+bash-4.4$ uname -a
+Linux zeus-1.cec.gmu.edu 4.18.0-348.23.1.el8_5.x86_64 #1 SMP Tue Apr 12 11:20:32 EDT 2022 x86_64 x86_64 x86_64 GNU/Linux
+bash-4.4$ pwd
+/home/jsingh51/CS262/lab4_jsingh51_201
+bash-4.4$ ls
+lab4_jsingh51_201.c  lab4_typescript_jsingh51_201  Makefile
+bash-4.4$ cat lab4_f[Kjsingh51_201.c 
+/*
+    Jared Singh, G01416039
+    CS 262, Lab Section 201
+    Lab 4
+
+    prints all possible times of an analoge clock given an angle in degrees
+
+*/
+
+#include <stdio.h>
+#include <stdlib.h>
+
+void printTimes(int angleKey);
+
+// Takes a number between 0 and 180 inclusive
+int main()
+{
+
+    char buffer[10];
+    int angleDeg;
+
+    printf("Enter an angle(in degrees) between 0 and 180 inclusive: ");
+
+    fgets(buffer, 4, stdin);
+    sscanf(buffer, "%d", &angleDeg);
+
+    if (angleDeg >= 0 && angleDeg <= 180)
+        printTimes(angleDeg);
+}
+
+// Loops throgh all possible positions
+// Calculates their angle
+// If pos matches input, prints the hour and min to screen
+void printTimes(int angleKey)
+{
+    printf("The times where the hands on a clock are: %d degrees apart are:\n", angleKey);
+    int count = 0;
+
+    for (int h = 1; h <= 12; h++)
+    {
+
+        for (int m = 0; m < 60; m++)
+        {
+            int hrsH = 30 * h;
+            int minH = ((6 - 0.5) * m);
+            int angleHands = abs(hrsH - minH);
+
+            if (angleKey == angleHands || angleKey == (360 - angleHands))
+            {
+                printf("angle: %d/%d, time: ", angleHands, (360 - angleHands));
+                count++;
+                if (h == 0)
+                    printf("12:");
+                else
+                    printf("%d:", h);
+
+                if (m < 10)
+                    printf("0%d\n", m);
+                else
+                    printf("%d\n", m);
+            }
+        }
+    }
+
+    if (count > 0)
+        printf("There are %d times where the hands have a %d degree angle\n", count, angleKey);
+    else
+        printf("There are no hands with such a position");
+}bash-4.4$ cat Makefile 
+#Jared Singh, G01416039
+#CS 262, Lab Section 201
+#Lab4
+CC = gcc
+LIBS = -lm
+TARGET = lab4_jsingh51_201
+CFLAGS = -g -Wall -std=c99 -pedantic-errors
+all: $(TARGET).c
+	$(CC) $(TARGET).c -o $(TARGET) $(CFLAGS) $(LIBS)
+lab4: $(TARGET).c
+	$(CC) $(TARGET).c -o $(TARGET) $(CFLAGS) $(LIBS)
+clean:
+	rm $(TARGET)
+bash-4.4$ make
+gcc lab4_jsingh51_201.c -o lab4_jsingh51_201 -g -Wall -std=c99 -pedantic-errors -lm
+bash-4.4$ ls
+lab4_jsingh51_201  lab4_jsingh51_201.c	lab4_typescript_jsingh51_201  Makefile
+bash-4.4$ ./ [Klab4_jsingh51_201 
+Enter an angle(in degrees) between 0 and 180 inclusive: 90
+The times where the hands on a clock are: 90 degrees apart are:
+angle: 90/270, time: 3:00
+angle: 90/270, time: 5:11
+angle: 270/90, time: 9:00
+angle: 270/90, time: 11:11
+There are 4 times where the hands have a 90 degree angle
+bash-4.4$ ./lab4_jsingh51_201 
+Enter an angle(in degrees) between 0 and 180 inclusive: 65
+The times where the hands on a clock are: 65 degrees apart are:
+angle: 65/295, time: 4:10
+angle: 65/295, time: 6:21
+angle: 65/295, time: 7:50
+angle: 295/65, time: 10:01
+There are 4 times where the hands have a 65 degree angle
+bash-4.4$ ./lab4_jsingh51_201 
+Enter an angle(in degrees) between 0 and 180 inclusive: 66
+The times where the hands on a clock are: 66 degrees apart are:
+angle: 294/66, time: 1:59
+angle: 66/294, time: 2:23
+angle: 66/294, time: 11:48
+angle: 294/66, time: 12:12
+There are 4 times where the hands have a 66 degree angle
+bash-4.4$ ./lab4_jsingh51_201 
+Enter an angle(in degrees) between 0 and 180 inclusive: 67
+The times where the hands on a clock are: 67 degrees apart are:
+angle: 67/293, time: 4:34
+angle: 67/293, time: 6:45
+angle: 67/293, time: 7:26
+angle: 67/293, time: 9:37
+There are 4 times where the hands have a 67 degree angle
+bash-4.4$ 0
+bash: 0: command not found
+bash-4.4$ 0./lab4_jsingh51_201 
+Enter an angle(in degrees) between 0 and 180 inclusive: 0
+The times where the hands on a clock are: 0 degrees apart are:
+angle: 0/360, time: 2:11
+angle: 360/0, time: 12:00
+There are 2 times where the hands have a 0 degree angle
+bash-4.4$ make clean
+rm lab4_jsingh51_201
+bash-4.4$ ls
+lab4_jsingh51_201.c  lab4_typescript_jsingh51_201  Makefile
+bash-4.4$ exit
+exit
+
+Script done on 2024-02-09 12:25:59-05:00

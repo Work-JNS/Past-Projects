@@ -1,0 +1,611 @@
+Script started on 2024-03-23 10:35:55-04:00
+bash-4.4$ [Kbash-4.4$ uname -a
+Linux zeus-1.cec.gmu.edu 4.18.0-348.23.1.el8_5.x86_64 #1 SMP Tue Apr 12 11:20:32 EDT 2022 x86_64 x86_64 x86_64 GNU/Linux
+bash-4.4$ pwd
+/home/jsingh51/CS262/lab8_jsingh51_201
+bash-4.4$ ls
+lab8_jsingh51_201.c  lab8_typecript_jsingh51_201
+bash-4.4$ cat lab8_jsingh51_201.c 
+/******************************************************
+ * CS262  
+ * Jared Singh
+ * 
+ * Lab8: Debugging Techniques 
+ * GDB Debugger
+ *
+ * This program calculates the sum of the integers from
+ * 0 up to (and including) an integer input by the user
+ ******************************************************/
+
+#include <stdio.h>
+#include <stdlib.h>
+
+int main()
+{
+  int i, count
+  int sum = 0;
+  char Buffer[100];
+
+  printf("Enter an integer -> ");
+  fgets(Buffer, 100, stdin);
+  sscanf(Buffer, "%d", count);
+
+  for (i == 0; i < count; i++);
+  {
+    sum = count;
+  }
+
+  printf("The sum of integers 0 to %d is: %d\n", count, sum);
+
+  return 0;
+}
+bash-4.4$ gcc lab8_jsingh51_201.c -Wall -O2
+[01m[Klab8_jsingh51_201.c:[m[K In function ‘[01m[Kmain[m[K’:
+[01m[Klab8_jsingh51_201.c:18:3:[m[K [01;31m[Kerror: [m[Kexpected ‘[01m[K=[m[K’, ‘[01m[K,[m[K’, ‘[01m[K;[m[K’, ‘[01m[Kasm[m[K’ or ‘[01m[K__attribute__[m[K’ before ‘[01m[Kint[m[K’
+   [01;31m[Kint[m[K sum = 0;
+   [01;31m[K^~~[m[K
+[01m[Klab8_jsingh51_201.c:23:24:[m[K [01;31m[Kerror: [m[K‘[01m[Kcount[m[K’ undeclared (first use in this function)
+   sscanf(Buffer, "%d", [01;31m[Kcount[m[K);
+                        [01;31m[K^~~~~[m[K
+[01m[Klab8_jsingh51_201.c:23:24:[m[K [01;36m[Knote: [m[Keach undeclared identifier is reported only once for each function it appears in
+[01m[Klab8_jsingh51_201.c:25:10:[m[K [01;35m[Kwarning: [m[Kstatement with no effect [[01;35m[K-Wunused-value[m[K]
+   for ([01;35m[Ki == 0[m[K; i < count; i++);
+        [01;35m[K~~^~~~[m[K
+[01m[Klab8_jsingh51_201.c:25:3:[m[K [01;35m[Kwarning: [m[Kthis ‘[01m[Kfor[m[K’ clause does not guard... [[01;35m[K-Wmisleading-indentation[m[K]
+   [01;35m[Kfor[m[K (i == 0; i < count; i++);
+   [01;35m[K^~~[m[K
+[01m[Klab8_jsingh51_201.c:26:3:[m[K [01;36m[Knote: [m[K...this statement, but the latter is misleadingly indented as if it were guarded by the ‘[01m[Kfor[m[K’
+   [01;36m[K{[m[K
+   [01;36m[K^[m[K
+[01m[Klab8_jsingh51_201.c:27:5:[m[K [01;31m[Kerror: [m[K‘[01m[Ksum[m[K’ undeclared (first use in this function)
+     [01;31m[Ksum[m[K = count;
+     [01;31m[K^~~[m[K
+bash-4.4$ ls
+lab8_jsingh51_201.c  lab8_typecript_jsingh51_201
+bash-4.4$ vim lab8_jsingh51_201.c 
+[?2004h[?1049h[22;0;0t[?1h=[?2004h[1;51r[?12h[?12l[27m[23m[29m[m[H[2J[?25l[51;1H"lab8_jsingh51_201.c" 33L, 640C[2;1H▽[6n[2;1H  [1;1H[>c]10;?]11;?[1;1H[34m/******************************************************
+ * CS262  
+ * Jared Singh
+ * 
+ * Lab8: Debugging Techniques 
+ * GDB Debugger
+ *
+ * This program calculates the sum of the integers from
+ * [m[31m0[m[34m up to (and including) an integer input by the user
+ ******************************************************/[m
+
+[35m#include [m[31m<stdio.h>[m
+[35m#include [m[31m<stdlib.h>[m
+
+[32mint[m main()
+{
+  [32mint[m i, count
+  [32mint[m sum = [31m0[m;
+  [32mchar[m Buffer[[31m100[m];
+
+  printf([31m"Enter an integer -> "[m);
+  fgets(Buffer, [31m100[m, [31mstdin[m);
+  sscanf(Buffer, [31m"[m[35m%d[m[31m"[m, count);
+
+  [38;5;130mfor[m (i == [31m0[m; i < count; i++);
+  {
+    sum = count;
+  }
+
+  printf([31m"The sum of integers 0 to [m[35m%d[m[31m is: [m[35m%d\n[m[31m"[m, count, sum);
+
+  [38;5;130mreturn[m [31m0[m;
+}
+[94m~                                                                                      [35;1H~                                                                                      [36;1H~                                                                                      [37;1H~                                                                                      [38;1H~                                                                                      [39;1H~                                                                                      [40;1H~                                                                                      [41;1H~                                                                                      [42;1H~                                                                                      [43;1H~                                                                                      [44;1H~                                                                                      [45;1H~                                                                                      [46;1H~                                                                                      [47;1H~                                                                                      [48;1H~                                                                                      [49;1H~                                                                                      [50;1H~                                                                                      [m[51;70H10,7[10CAll[10;7H[?25h[?12$p[?25l[51;60H:[10;7H[51;1H[K[51;1H:[?2004h[?25hw[?25l[?25hq[?25l[?25h[?25l[51;3H[K[51;3H[?25h[?25l[51;2H[K[51;2H[?25hq[?25l[?25h[?25l[?2004l[51;1H[K[51;1H[?2004l[?1l>[?25h[?1049l[23;0;0tbash-4.4$ vim lab8_jsingh51_201.c 
+[?2004h[?1049h[22;0;0t[?1h=[?2004h[1;51r[?12h[?12l[27m[23m[29m[m[H[2J[?25l[51;1H"lab8_jsingh51_201.c" 33L, 640C[2;1H▽[6n[2;1H  [1;1H[>c]10;?]11;?[1;1H[34m/******************************************************
+ * CS262  
+ * Jared Singh
+ * 
+ * Lab8: Debugging Techniques 
+ * GDB Debugger
+ *
+ * This program calculates the sum of the integers from
+ * [m[31m0[m[34m up to (and including) an integer input by the user
+ ******************************************************/[m
+
+[35m#include [m[31m<stdio.h>[m
+[35m#include [m[31m<stdlib.h>[m
+
+[32mint[m main()
+{
+  [32mint[m i, count
+  [32mint[m sum = [31m0[m;
+  [32mchar[m Buffer[[31m100[m];
+
+  printf([31m"Enter an integer -> "[m);
+  fgets(Buffer, [31m100[m, [31mstdin[m);
+  sscanf(Buffer, [31m"[m[35m%d[m[31m"[m, count);
+
+  [38;5;130mfor[m (i == [31m0[m; i < count; i++);
+  {
+    sum = count;
+  }
+
+  printf([31m"The sum of integers 0 to [m[35m%d[m[31m is: [m[35m%d\n[m[31m"[m, count, sum);
+
+  [38;5;130mreturn[m [31m0[m;
+}
+[94m~                                                                                      [35;1H~                                                                                      [36;1H~                                                                                      [37;1H~                                                                                      [38;1H~                                                                                      [39;1H~                                                                                      [40;1H~                                                                                      [41;1H~                                                                                      [42;1H~                                                                                      [43;1H~                                                                                      [44;1H~                                                                                      [45;1H~                                                                                      [46;1H~                                                                                      [47;1H~                                                                                      [48;1H~                                                                                      [49;1H~                                                                                      [50;1H~                                                                                      [m[51;70H10,7[10CAll[10;7H[?25h[?12$p[?25l[51;60H~@k[10;7H[51;60H   [11;1H[51;71H1,0-1[11;1H[?25h[?25l[51;60H~@k[11;1H[51;60H   [12;7H[51;71H2,7  [12;7H[?25h[?25l[51;60H~@k[12;7H[51;60H   [13;7H[51;71H3[13;7H[?25h[?25l[51;60H~@k[13;7H[51;60H   [14;1H[51;71H4,0-1[14;1H[?25h[?25l[51;60H~@k[14;1H[51;60H   [15;7H[51;71H5,7  [15;7H[?25h[?25l[51;60H~@k[15;7H[51;60H   [16;1H[106m{[33;1H}[m[51;71H6,1[16;1H[?25h[?25l[51;60H~@k[16;1H[51;60H   [17;7H[16;1H{[33;1H}[51;71H7,7[17;7H[?25h[?25l[51;60H~@k[17;7H[51;60H   [17;8H[51;73H8[17;8H[?25h[?25l[51;60H~@k[17;8H[51;60H   [17;9H[51;73H9[17;9H[?25h[?25l[51;60H~@k[17;9H[51;60H   [17;10H[51;73H10[17;10H[?25h[?25l[51;74H1[17;11H[?25h[?25l[51;60H~@k[17;11H[51;60H   [17;12H[51;74H2[17;12H[?25h[?25l[51;60H~@k[17;12H[51;60H   [17;13H[51;74H3[17;13H[?25h[?25l[51;60H~@k[17;13H[51;60H   [17;14H[51;74H4[17;14H[?25h[?25l[51;60H~@k[17;14H[51;60H   [17;14H[?25h[?25l[51;60H~@k[17;14H[51;60H   [17;14H[?25h[?25l[51;60H~@k[17;14H[51;60H   [17;14H[?25h[?25l[51;60H~@k[17;14H[51;60H   [17;13H[51;74H3[17;13H[?25h[?25l[51;60H~@k[17;13H[51;60H   [18;13H[51;71H8[18;13H[?25h[?25l[51;60H~@k[18;13H[51;60H   [17;13H[51;71H7[17;13H[?25h[?25l[51;60H~@k[17;13H[51;60H   [17;14H[51;74H4[17;14H[?25h[?25l[51;60H~@k[17;14H[51;60H   [17;14H[?25h[?25l[51;60H~@k[17;14H[51;60H   [17;13H[51;74H3[17;13H[?25h[?25l[51;60H~@k[17;13H[51;60H   [17;14H[51;74H4[17;14H[?25h[?25l[51;60H~@k[17;14H[51;60H   [17;14H[?25h[?25l[51;60Hi[17;14H[51;60H [17;14H[51;1H[1m-- INSERT --[m[51;13H[K[51;70H17,14[9CAll[17;14H[?25h[?25l[51;74H5[17;15H[?25h[?25l;[51;74H6[17;16H[?25h[?25l[51;71H8,15[18;15H[?25h[?25l[51;74H4[18;14H[?25h[?25l[51;74H3[18;13H[?25h[?25l[51;74H2[18;12H[?25h[?25l[51;74H1[18;11H[?25h[?25l[51;74H0[18;10H[?25h[?25l[51;73H9 [18;9H[?25h[?25l[51;71H9[19;9H[?25h[?25l[51;71H8[18;9H[?25h[?25l[51;73H10[18;10H[?25h[?25l[51;74H1[18;11H[?25h[?25l[51;74H2[18;12H[?25h[?25l[51;74H3[18;13H[?25h[?25l[51;74H4[18;14H[?25h[?25l[51;74H5[18;15H[?25h[51;1H[K[18;14H[?25l[51;60H^[[18;14H[51;60H  [18;15H[51;70H18,14[9CAll[18;14H[?25h[?25l[51;60H:[18;14H[51;60H[K[51;1H:[?2004h[?25hw[?25l[?25hq[?25l[?25h[?25l[?2004l"lab8_jsingh51_201.c" 33L, 641C written
+[?2004l[?1l>[?25h[?1049l[23;0;0tbash-4.4$ vim lab8_jsingh51_201.c [C[C[C[C[C[C[C[C[C[Cls[Kgcc lab8_jsingh51_201.c -Wall -O2 -o lab8_jsingh51_201.c [K[K[K
+[01m[Klab8_jsingh51_201.c:[m[K In function ‘[01m[Kmain[m[K’:
+[01m[Klab8_jsingh51_201.c:23:20:[m[K [01;35m[Kwarning: [m[Kformat ‘[01m[K%d[m[K’ expects argument of type ‘[01m[Kint *[m[K’, but argument 3 has type ‘[01m[Kint[m[K’ [[01;35m[K-Wformat=[m[K]
+   sscanf(Buffer, "[01;35m[K%d[m[K", [32m[Kcount[m[K);
+                   [01;35m[K~^[m[K   [32m[K~~~~~[m[K
+[01m[Klab8_jsingh51_201.c:25:10:[m[K [01;35m[Kwarning: [m[Kstatement with no effect [[01;35m[K-Wunused-value[m[K]
+   for ([01;35m[Ki == 0[m[K; i < count; i++);
+        [01;35m[K~~^~~~[m[K
+[01m[Klab8_jsingh51_201.c:25:3:[m[K [01;35m[Kwarning: [m[Kthis ‘[01m[Kfor[m[K’ clause does not guard... [[01;35m[K-Wmisleading-indentation[m[K]
+   [01;35m[Kfor[m[K (i == 0; i < count; i++);
+   [01;35m[K^~~[m[K
+[01m[Klab8_jsingh51_201.c:26:3:[m[K [01;36m[Knote: [m[K...this statement, but the latter is misleadingly indented as if it were guarded by the ‘[01m[Kfor[m[K’
+   [01;36m[K{[m[K
+   [01;36m[K^[m[K
+[01m[Klab8_jsingh51_201.c:23:3:[m[K [01;35m[Kwarning: [m[K‘[01m[Kcount[m[K’ is used uninitialized in this function [[01;35m[K-Wuninitialized[m[K]
+   [01;35m[Ksscanf(Buffer, "%d", count)[m[K;
+   [01;35m[K^~~~~~~~~~~~~~~~~~~~~~~~~~~[m[K
+bash-4.4$ ./[K[Kls
+lab8_jsingh51_201  lab8_jsingh51_201.c	lab8_typecript_jsingh51_201
+bash-4.4$ ./lab8_jsingh51_201 
+Enter an integer -> 10
+Segmentation fault (core dumped)
+bash-4.4$ vim lab8_jsingh51_201.c 
+[?2004h[?1049h[22;0;0t[?1h=[?2004h[1;51r[?12h[?12l[27m[23m[29m[m[H[2J[?25l[51;1H"lab8_jsingh51_201.c" 33L, 641C[2;1H▽[6n[2;1H  [1;1H[>c]10;?]11;?[1;1H[34m/******************************************************
+ * CS262  
+ * Jared Singh
+ * 
+ * Lab8: Debugging Techniques 
+ * GDB Debugger
+ *
+ * This program calculates the sum of the integers from
+ * [m[31m0[m[34m up to (and including) an integer input by the user
+ ******************************************************/[m
+
+[35m#include [m[31m<stdio.h>[m
+[35m#include [m[31m<stdlib.h>[m
+
+[32mint[m main()
+{
+  [32mint[m i, count;
+  [32mint[m sum = [31m0[m;
+  [32mchar[m Buffer[[31m100[m];
+
+  printf([31m"Enter an integer -> "[m);
+  fgets(Buffer, [31m100[m, [31mstdin[m);
+  sscanf(Buffer, [31m"[m[35m%d[m[31m"[m, count);
+
+  [38;5;130mfor[m (i == [31m0[m; i < count; i++);
+  {
+    sum = count;
+  }
+
+  printf([31m"The sum of integers 0 to [m[35m%d[m[31m is: [m[35m%d\n[m[31m"[m, count, sum);
+
+  [38;5;130mreturn[m [31m0[m;
+}
+[94m~                                                                                      [35;1H~                                                                                      [36;1H~                                                                                      [37;1H~                                                                                      [38;1H~                                                                                      [39;1H~                                                                                      [40;1H~                                                                                      [41;1H~                                                                                      [42;1H~                                                                                      [43;1H~                                                                                      [44;1H~                                                                                      [45;1H~                                                                                      [46;1H~                                                                                      [47;1H~                                                                                      [48;1H~                                                                                      [49;1H~                                                                                      [50;1H~                                                                                      [m[51;70H18,14[9CAll[18;14H[?25h[?12$p[?25l[51;60H~@k[18;14H[51;60H   [19;14H[106m[[3C][m[51;71H9[19;14H[?25h[?25l[51;60H~@k[19;14H[51;60H   [20;1H[19;14H[[3C][51;70H20,0-1[20;1H[?25h[?25l[51;60H~@k[20;1H[51;60H   [21;14H[51;71H1,14 [21;14H[?25h[?25l[51;60H~@k[21;14H[51;60H   [22;14H[51;71H2[22;14H[?25h[?25l[51;60H~@k[22;14H[51;60H   [23;14H[51;71H3[23;14H[?25h[?25l[51;60H~@k[23;14H[51;60H   [24;1H[51;71H4,0-1[24;1H[?25h[?25l[51;60H~@k[24;1H[51;60H   [24;1H[?25h[?25l[51;60H~@k[24;1H[51;60H   [23;14H[51;71H3,14 [23;14H[?25h[?25l[51;60H~@ý[23;14H[51;60H   [23;18H[51;74H8[23;18H[?25h[?25l[51;60H~@ý[23;18H[51;60H   [23;24H[51;73H24[23;24H[?25h[?25l[51;60H~@ý[23;24H[51;60H   [24;1H[51;71H4,0-1[24;1H[?25h[?25l[51;60H~@k[24;1H[51;60H   [24;1H[?25h[?25l[51;60H~@k[24;1H[51;60H   [24;1H[?25h[?25l[51;60H~@k[24;1H[51;60H   [24;1H[?25h[?25l[51;60H~@k[24;1H[51;60H   [25;1H[51;71H5,1  [25;1H[?25h[?25l[51;60H~@k[25;1H[51;60H   [24;1H[51;71H4,0-1[24;1H[?25h[?25l[51;60H~@k[24;1H[51;60H   [23;1H[51;71H3,1  [23;1H[?25h[?25l[51;60H~@@[23;1H[51;60H   [23;30H[51;73H30[23;30H[?25h[?25l[51;60H~@k[23;30H[51;60H   [23;29H[23;9H[106m([19C)[m[51;73H29[23;29H[?25h[?25l[51;60H~@k[23;29H[51;60H   [23;28H[23;9H([19C)[51;74H8[23;28H[?25h[?25l[51;60H~@ý[23;28H[51;60H   [23;24H[51;74H4[23;24H[?25h[?25l[51;60Hi[23;24H[51;60H [23;24H[51;1H[1m-- INSERT --[m[51;13H[K[51;70H23,24[9CAll[23;24H[?25h[?25l&count);[51;74H5[23;25H[?25h[51;1H[K[23;24H[?25l[51;60H^[[23;24H[51;60H  [23;25H[51;70H23,24[9CAll[23;24H[?25h[?25l[51;60H`[23;24H[?25h[?25l[51;61H:[23;24H[51;1H[97m[41mE78: Unknown mark[m[51;60H[K[23;24H[51;70H23,24[9CAll[23;24H[?25h[?25l[51;60H^[[23;24H[51;60H  [23;24H[51;60H^[[23;24H[51;60H  [23;24H[?25h[?25l[51;60H:[23;24H[51;1H[K[51;1H:[?2004h[?25hw[?25l[?25hq[?25l[?25h[?25l[?2004l"lab8_jsingh51_201.c" 33L, 642C written
+[?2004l[?1l>[?25h[?1049l[23;0;0tbash-4.4$ vim lab8_jsingh51_201.c [C[C[C[C[C[C[C[C[C[C[4P./lab8_jsingh51_201[C[C[C[C[C[C[C[C[C[C[Cls[Kgcc lab8_jsingh51_201.c -Wall -O2 -o lab8_jsingh51_201
+[01m[Klab8_jsingh51_201.c:[m[K In function ‘[01m[Kmain[m[K’:
+[01m[Klab8_jsingh51_201.c:25:10:[m[K [01;35m[Kwarning: [m[Kstatement with no effect [[01;35m[K-Wunused-value[m[K]
+   for ([01;35m[Ki == 0[m[K; i < count; i++);
+        [01;35m[K~~^~~~[m[K
+[01m[Klab8_jsingh51_201.c:25:3:[m[K [01;35m[Kwarning: [m[Kthis ‘[01m[Kfor[m[K’ clause does not guard... [[01;35m[K-Wmisleading-indentation[m[K]
+   [01;35m[Kfor[m[K (i == 0; i < count; i++);
+   [01;35m[K^~~[m[K
+[01m[Klab8_jsingh51_201.c:26:3:[m[K [01;36m[Knote: [m[K...this statement, but the latter is misleadingly indented as if it were guarded by the ‘[01m[Kfor[m[K’
+   [01;36m[K{[m[K
+   [01;36m[K^[m[K
+bash-4.4$ gcc lab8_jsingh51_201.c -Wall -O2 -o lab8_jsingh51_201[C[C[C[C[C[C[C[C[C[C[30Pvim lab8_jsingh51_201.c [C[C[C[C[C[C[C[C[C[C[4P./lab8_jsingh51_201[C
+Enter an integer -> 10
+The sum of integers 0 to 10 is: 10
+bash-4.4$ ./lab8_jsingh51_201 [C[C[C[C[C[C[C[C[C[Cgcc lab8_jsingh51_201.c -Wall -O2 -o lab8_jsingh51_201[C[C[C[C[1P[1P[1P[1P[1P[1P
+bash-4.4$ vim lab8_jsingh51_201.c
+[?2004h[?1049h[22;0;0t[?1h=[?2004h[1;51r[?12h[?12l[27m[23m[29m[m[H[2J[?25l[51;1H"lab8_jsingh51_201.c" 33L, 642C[2;1H▽[6n[2;1H  [1;1H[>c]10;?]11;?[1;1H[34m/******************************************************
+ * CS262  
+ * Jared Singh
+ * 
+ * Lab8: Debugging Techniques 
+ * GDB Debugger
+ *
+ * This program calculates the sum of the integers from
+ * [m[31m0[m[34m up to (and including) an integer input by the user
+ ******************************************************/[m
+
+[35m#include [m[31m<stdio.h>[m
+[35m#include [m[31m<stdlib.h>[m
+
+[32mint[m main()
+{
+  [32mint[m i, count;
+  [32mint[m sum = [31m0[m;
+  [32mchar[m Buffer[[31m100[m];
+
+  printf([31m"Enter an integer -> "[m);
+  fgets(Buffer, [31m100[m, [31mstdin[m);
+  sscanf(Buffer, [31m"[m[35m%d[m[31m"[m, &count);
+
+  [38;5;130mfor[m (i == [31m0[m; i < count; i++);
+  {
+    sum = count;
+  }
+
+  printf([31m"The sum of integers 0 to [m[35m%d[m[31m is: [m[35m%d\n[m[31m"[m, count, sum);
+
+  [38;5;130mreturn[m [31m0[m;
+}
+[94m~                                                                                      [35;1H~                                                                                      [36;1H~                                                                                      [37;1H~                                                                                      [38;1H~                                                                                      [39;1H~                                                                                      [40;1H~                                                                                      [41;1H~                                                                                      [42;1H~                                                                                      [43;1H~                                                                                      [44;1H~                                                                                      [45;1H~                                                                                      [46;1H~                                                                                      [47;1H~                                                                                      [48;1H~                                                                                      [49;1H~                                                                                      [50;1H~                                                                                      [m[51;70H23,24[9CAll[23;24H[?25h[?12$p[?25l[51;60H~@k[23;24H[51;60H   [24;1H[51;71H4,0-1[24;1H[?25h[?25l[51;60H~@k[24;1H[51;60H   [23;24H[51;71H3,24 [23;24H[?25h[?25l[51;60H~@k[23;24H[51;60H   [24;1H[51;71H4,0-1[24;1H[?25h[?25l[51;60H~@k[24;1H[51;60H   [25;24H[51;71H5,24 [25;24H[?25h[?25l[51;60H~@k[25;24H[51;60H   [26;3H[106m{
+
+[m  [106m}[m[51;71H6,3 [26;3H[?25h[?25l[51;60H~@k[26;3H[51;60H   [27;16H[26;3H{
+
+  }[51;71H7,16[27;16H[?25h[?25l[51;60Hi[27;16H[51;60H [27;16H[51;1H[1m-- INSERT --[m[51;13H[K[51;70H27,16[9CAll[27;16H[?25h[?25l[51;74H7[27;17H[?25h[?25l[28;50r[28;1H[L[1;51r[51;70H[K[51;70H28,5[10CAll[28;5H[?25h[?25lp[51;73H6[28;6H[?25h[?25lr[51;73H7[28;7H[?25h[?25li[51;73H8[28;8H[?25h[?25ln[51;73H9[28;9H[?25h[?25lt[51;73H10[28;10H[?25h[?25lf[51;74H1[28;11H[?25h[?25l([51;74H2[28;12H[?25h[?25l)[106m()[m[51;74H3[28;13H[?25h[?25l[51;74H2[28;12H[?25h[?25l[31m[106m"[m[31m)
+  }
+
+  printf([m[1CThe sum of integers [1C to %d is: %d\n[1C[31m, count, sum);
+
+  return 0;
+}[m[28;11H([31m"[m[51;74H3[28;13H[?25h[?25l[31m"[m)
+  }
+
+  printf([1C[31mThe sum of integers 0 to [m[35m%d[m[31m is: [m[35m%d\n[m[1C, count, sum);
+
+  [38;5;130mreturn[m [1C;
+}[28;11H[106m([2C)[m[51;74H4[28;14H[?25h[?25l([2C)[51;74H3[28;13H[?25h[?25l[31mi"[m)[51;74H4[28;14H[?25h[?25l[31m "[m)[51;74H5[28;15H[?25h[?25l[31m="[m)[51;74H6[28;16H[?25h[?25l[31m "[m)[51;74H7[28;17H[?25h[?25l[31m%"[m)[51;74H8[28;18H[?25h[?25l[35m%s[m[31m"[m)[51;74H9[28;19H[?25h[?25l[31m%"[m)[28;20H[K[51;74H8[28;18H[?25h[?25l[35m%d[m[31m"[m)[51;74H9[28;19H[?25h[?25l[31m "[m)[51;73H20[28;20H[?25h[?25l[31ms"[m)[51;74H1[28;21H[?25h[?25l[31mu"[m)[51;74H2[28;22H[?25h[?25l[31mm"[m)[51;74H3[28;23H[?25h[?25l[31m "[m)[51;74H4[28;24H[?25h[?25l[31m="[m)[51;74H5[28;25H[?25h[?25l[31m "[m)[51;74H6[28;26H[?25h[?25l[31m "[m)[51;74H7[28;27H[?25h[?25l[31m"[m)[28;28H[K[51;74H6[28;26H[?25h[?25l[31m%"[m)[51;74H7[28;27H[?25h[?25l[35m%s[m[31m"[m)[51;74H8[28;28H[?25h[?25l[35m\"[m[31m)
+  }
+
+  printf([m[1CThe sum of integers [1C to %d is: %d\n[1C[31m, count, sum);
+
+  return 0;
+}[m[51;74H9[28;29H[?25h[?25l[35mn[m[31m"[m)
+  }
+
+  printf([1C[31mThe sum of integers 0 to [m[35m%d[m[31m is: [m[35m%d\n[m[1C, count, sum);
+
+  [38;5;130mreturn[m [1C;
+}[51;73H30[28;30H[?25h[?25l[28;11H[106m([19C)[m[51;74H1[28;31H[?25h[?25l[106m,[m),[106m)[m[51;74H2[28;32H[?25h[?25l[106m [m) [106m)[m[51;74H3[28;33H[?25h[?25l[106mi[m)i[106m)[m[51;74H4[28;34H[?25h[?25l[106m,[m),[106m)[m[51;74H5[28;35H[?25h[?25l[106m [m) [106m)[m[51;74H6[28;36H[?25h[?25l[106ms[m)s[106m)[m[51;74H7[28;37H[?25h[?25l[106mu[m)u[106m)[m[51;74H8[28;38H[?25h[?25l[106mm[m)m[106m)[m[51;74H9[28;39H[?25h[?25l[51;73H40[28;40H[?25h[?25l;[28;11H([27C)[51;74H1[28;41H[?25h[51;1H[K[28;40H[?25l[51;60H^[[28;40H[51;60H  [28;41H[51;70H28,40[9CAll[28;40H[?25h[?25l[51;60H:[28;40H[51;60H[K[51;1H:[?2004h[?25hw[?25l[?25hq[?25l[?25h[?25l[?2004l"lab8_jsingh51_201.c" 34L, 683C written
+[?2004l[?1l>[?25h[?1049l[23;0;0tbash-4.4$ vim lab8_jsingh51_201.c[C[C[C[C[C[C[C[C[C[Cgcc lab8_jsingh51_201.c -O2 -o lab8_jsingh51_201[C[C[C[C[C[C[C[C[C[C[28P./lab8_jsingh51_201 [C[C[C[C[C[C[C[C[C[Cgcc lab8_jsingh51_201.c -O2 -o lab8_jsingh51_201[C[C[C[C[C[C[C[C[C[C[28P./lab8_jsingh51_201 [C[C[C[C[C[C[C[C[C[Cgcc lab8_jsingh51_201.c -Wall -O2 -o lab8_jsingh51_201
+[01m[Klab8_jsingh51_201.c:[m[K In function ‘[01m[Kmain[m[K’:
+[01m[Klab8_jsingh51_201.c:25:10:[m[K [01;35m[Kwarning: [m[Kstatement with no effect [[01;35m[K-Wunused-value[m[K]
+   for ([01;35m[Ki == 0[m[K; i < count; i++);
+        [01;35m[K~~^~~~[m[K
+[01m[Klab8_jsingh51_201.c:25:3:[m[K [01;35m[Kwarning: [m[Kthis ‘[01m[Kfor[m[K’ clause does not guard... [[01;35m[K-Wmisleading-indentation[m[K]
+   [01;35m[Kfor[m[K (i == 0; i < count; i++);
+   [01;35m[K^~~[m[K
+[01m[Klab8_jsingh51_201.c:26:3:[m[K [01;36m[Knote: [m[K...this statement, but the latter is misleadingly indented as if it were guarded by the ‘[01m[Kfor[m[K’
+   [01;36m[K{[m[K
+   [01;36m[K^[m[K
+[01m[Klab8_jsingh51_201.c:28:27:[m[K [01;35m[Kwarning: [m[Kformat ‘[01m[K%s[m[K’ expects argument of type ‘[01m[Kchar *[m[K’, but argument 3 has type ‘[01m[Kint[m[K’ [[01;35m[K-Wformat=[m[K]
+     printf("i = %d sum = [01;35m[K%s[m[K\n", i, [32m[Ksum[m[K);
+                          [01;35m[K~^[m[K        [32m[K~~~[m[K
+                          [32m[K%d[m[K
+[01m[Klab8_jsingh51_201.c:28:5:[m[K [01;35m[Kwarning: [m[K‘[01m[Ki[m[K’ may be used uninitialized in this function [[01;35m[K-Wmaybe-uninitialized[m[K]
+     [01;35m[Kprintf("i = %d sum = %s\n", i, sum)[m[K;
+     [01;35m[K^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[m[K
+bash-4.4$ gcc lab8_jsingh51_201.c -Wall -O2 -o lab8_jsingh51_201[C[C[C[C[C[C[C[C[C[C[31Pvim lab8_jsingh51_201.c
+[?2004h[?1049h[22;0;0t[?1h=[?2004h[1;51r[?12h[?12l[27m[23m[29m[m[H[2J[?25l[51;1H"lab8_jsingh51_201.c" 34L, 683C[2;1H▽[6n[2;1H  [1;1H[>c]10;?]11;?[1;1H[34m/******************************************************
+ * CS262  
+ * Jared Singh
+ * 
+ * Lab8: Debugging Techniques 
+ * GDB Debugger
+ *
+ * This program calculates the sum of the integers from
+ * [m[31m0[m[34m up to (and including) an integer input by the user
+ ******************************************************/[m
+
+[35m#include [m[31m<stdio.h>[m
+[35m#include [m[31m<stdlib.h>[m
+
+[32mint[m main()
+{
+  [32mint[m i, count;
+  [32mint[m sum = [31m0[m;
+  [32mchar[m Buffer[[31m100[m];
+
+  printf([31m"Enter an integer -> "[m);
+  fgets(Buffer, [31m100[m, [31mstdin[m);
+  sscanf(Buffer, [31m"[m[35m%d[m[31m"[m, &count);
+
+  [38;5;130mfor[m (i == [31m0[m; i < count; i++);
+  {
+    sum = count;
+    printf([31m"i = [m[35m%d[m[31m sum = [m[35m%s\n[m[31m"[m, i, sum);
+  }
+
+  printf([31m"The sum of integers 0 to [m[35m%d[m[31m is: [m[35m%d\n[m[31m"[m, count, sum);
+
+  [38;5;130mreturn[m [31m0[m;
+}
+[94m~                                                                                      [36;1H~                                                                                      [37;1H~                                                                                      [38;1H~                                                                                      [39;1H~                                                                                      [40;1H~                                                                                      [41;1H~                                                                                      [42;1H~                                                                                      [43;1H~                                                                                      [44;1H~                                                                                      [45;1H~                                                                                      [46;1H~                                                                                      [47;1H~                                                                                      [48;1H~                                                                                      [49;1H~                                                                                      [50;1H~                                                                                      [m[51;70H28,40[9CAll[28;40H[?25h[?12$p[?25l[51;60H~@k[28;40H[51;60H   [28;39H[28;11H[106m([27C)[m[51;73H39[28;39H[?25h[?25l[51;60H~@k[28;39H[51;60H   [28;38H[28;11H([27C)[51;74H8[28;38H[?25h[?25l[51;60H~@k[28;38H[51;60H   [28;37H[51;74H7[28;37H[?25h[?25l[51;60H~@k[28;37H[51;60H   [28;36H[51;74H6[28;36H[?25h[?25l[51;60H~@k[28;36H[51;60H   [28;35H[51;74H5[28;35H[?25h[?25l[51;60H~@k[28;35H[51;60H   [28;34H[51;74H4[28;34H[?25h[?25l[51;60H~@k[28;34H[51;60H   [28;33H[51;74H3[28;33H[?25h[?25l[51;60H~@k[28;33H[51;60H   [28;32H[51;74H2[28;32H[?25h[?25l[51;60H~@k[28;32H[51;60H   [28;31H[51;74H1[28;31H[?25h[?25l[51;60H~@k[28;31H[51;60H   [28;30H[51;74H0[28;30H[?25h[?25l[51;60H~@k[28;30H[51;60H   [28;29H[51;73H29[28;29H[?25h[?25l[51;60H~@k[28;29H[51;60H   [28;28H[51;74H8[28;28H[?25h[?25l[51;60H~@k[28;28H[51;60H   [28;27H[51;74H7[28;27H[?25h[?25l[51;60Hi[28;27H[51;60H [28;27H[51;1H[1m-- INSERT --[m[51;13H[K[51;70H28,27[9CAll[28;27H[?25h[?25l[31m%[m[35m\n[m[31m"[m, i, sum);[28;40H[K[28;27H[?25h[?25l[35m%d\n[m[31m"[m, i, sum);[51;74H8[28;28H[?25h[51;1H[K[28;27H[?25l[51;60H^[[28;27H[51;60H  [28;28H[51;70H28,27[9CAll[28;27H[?25h[?25l[51;60H:[28;27H[51;60H[K[51;1H:[?2004h[?25hw[?25l[?25hq[?25l[?25h[?25l[?2004l"lab8_jsingh51_201.c" 34L, 683C written
+[?2004l[?1l>[?25h[?1049l[23;0;0tbash-4.4$ vim lab8_jsingh51_201.c[C[C[C[C[C[C[C[C[C[Cgcc lab8_jsingh51_201.c -Wall -O2 -o lab8_jsingh51_201
+[01m[Klab8_jsingh51_201.c:[m[K In function ‘[01m[Kmain[m[K’:
+[01m[Klab8_jsingh51_201.c:25:10:[m[K [01;35m[Kwarning: [m[Kstatement with no effect [[01;35m[K-Wunused-value[m[K]
+   for ([01;35m[Ki == 0[m[K; i < count; i++);
+        [01;35m[K~~^~~~[m[K
+[01m[Klab8_jsingh51_201.c:25:3:[m[K [01;35m[Kwarning: [m[Kthis ‘[01m[Kfor[m[K’ clause does not guard... [[01;35m[K-Wmisleading-indentation[m[K]
+   [01;35m[Kfor[m[K (i == 0; i < count; i++);
+   [01;35m[K^~~[m[K
+[01m[Klab8_jsingh51_201.c:26:3:[m[K [01;36m[Knote: [m[K...this statement, but the latter is misleadingly indented as if it were guarded by the ‘[01m[Kfor[m[K’
+   [01;36m[K{[m[K
+   [01;36m[K^[m[K
+[01m[Klab8_jsingh51_201.c:28:5:[m[K [01;35m[Kwarning: [m[K‘[01m[Ki[m[K’ may be used uninitialized in this function [[01;35m[K-Wmaybe-uninitialized[m[K]
+     [01;35m[Kprintf("i = %d sum = %d\n", i, sum)[m[K;
+     [01;35m[K^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[m[K
+bash-4.4$ gcc lab8_jsingh51_201.c -Wall -O2 -o lab8_jsingh51_201[C[C[C[C[C[C[C[C[C[C[31Pvim lab8_jsingh51_201.c[C[C[C[C[C[C[C[C[C[Cgcc lab8_jsingh51_201.c -Wall -O2 -o lab8_jsingh51_201[C[C[C[C[C[C[C[C[C[C[31Pvim lab8_jsingh51_201.c[C[C[C[C[C[C[C[C[C[Cgcc lab8_jsingh51_201.c -O2 -o lab8_jsingh51_201[C[C[C[C[C[C[C[C[C[C[28P./lab8_jsingh51_201 
+Enter an integer -> 10
+i = 10 sum = 10
+The sum of integers 0 to 10 is: 10
+bash-4.4$ ./lab8_jsingh51_201 [C[C[C[C[C[C[C[C[C[Cgcc lab8_jsingh51_201.c -Wall -O2 -o lab8_jsingh51_201[C[C[C[C[C[C[C[C[C[C[31Pvim lab8_jsingh51_201.c
+[?2004h[?1049h[22;0;0t[?1h=[?2004h[1;51r[?12h[?12l[27m[23m[29m[m[H[2J[?25l[51;1H"lab8_jsingh51_201.c" 34L, 683C[2;1H▽[6n[2;1H  [1;1H[>c]10;?]11;?[1;1H[34m/******************************************************
+ * CS262  
+ * Jared Singh
+ * 
+ * Lab8: Debugging Techniques 
+ * GDB Debugger
+ *
+ * This program calculates the sum of the integers from
+ * [m[31m0[m[34m up to (and including) an integer input by the user
+ ******************************************************/[m
+
+[35m#include [m[31m<stdio.h>[m
+[35m#include [m[31m<stdlib.h>[m
+
+[32mint[m main()
+{
+  [32mint[m i, count;
+  [32mint[m sum = [31m0[m;
+  [32mchar[m Buffer[[31m100[m];
+
+  printf([31m"Enter an integer -> "[m);
+  fgets(Buffer, [31m100[m, [31mstdin[m);
+  sscanf(Buffer, [31m"[m[35m%d[m[31m"[m, &count);
+
+  [38;5;130mfor[m (i == [31m0[m; i < count; i++);
+  {
+    sum = count;
+    printf([31m"i = [m[35m%d[m[31m sum = [m[35m%d\n[m[31m"[m, i, sum);
+  }
+
+  printf([31m"The sum of integers 0 to [m[35m%d[m[31m is: [m[35m%d\n[m[31m"[m, count, sum);
+
+  [38;5;130mreturn[m [31m0[m;
+}
+[94m~                                                                                      [36;1H~                                                                                      [37;1H~                                                                                      [38;1H~                                                                                      [39;1H~                                                                                      [40;1H~                                                                                      [41;1H~                                                                                      [42;1H~                                                                                      [43;1H~                                                                                      [44;1H~                                                                                      [45;1H~                                                                                      [46;1H~                                                                                      [47;1H~                                                                                      [48;1H~                                                                                      [49;1H~                                                                                      [50;1H~                                                                                      [m[51;70H28,27[9CAll[28;27H[?25h[?12$p[?25l[51;60H~@k[28;27H[51;60H   [27;16H[51;71H7,16[27;16H[?25h[?25l[51;60H~@k[27;16H[51;60H   [28;27H[51;71H8,27[28;27H[?25h[?25l[51;60H~@k[28;27H[51;60H   [29;3H[26;3H[106m{[29;3H}[m[51;71H9,3 [29;3H[?25h[?25l[51;60H~@k[29;3H[51;60H   [30;1H[26;3H{[29;3H}[51;70H30,0-1[30;1H[?25h[?25l[51;60H~@k[30;1H[51;60H   [29;3H[26;3H[106m{[29;3H}[m[51;70H29,3  [29;3H[?25h[?25l[51;60H~@k[29;3H[51;60H   [28;27H[26;3H{[29;3H}[51;71H8,27[28;27H[?25h[?25l[51;60H~@k[28;27H[51;60H   [27;16H[51;71H7,16[27;16H[?25h[?25l[51;60H~@k[27;16H[51;60H   [27;1H[51;74H [27;1H[?25h[?25l[51;60Hi[27;1H[51;60H [27;1H[51;1H[1m-- INSERT --[m[51;13H[K[51;70H27,1[10CAll[27;1H[?25h[?25l[51;73H2[27;2H[?25h[?25l[51;73H3[27;3H[?25h[?25l[51;73H5[27;5H[?25h[?25l/sum = count;[51;73H6[27;6H[?25h[?25l[34m//sum = count;[m[51;73H7[27;7H[?25h[?25l[51;73H19[27;19H[?25h[?25l[28;50r[28;1H[L[1;51r[28;5H[34m//[m[51;70H[K[51;70H28,7[10CAll[28;7H[?25h[?25l/[28;6H[K[51;73H6[28;6H[?25h[?25l[28;5H[K[51;73H5[28;5H[?25h[?25ld[51;73H6[28;6H[?25h[?25lu[51;73H7[28;7H[?25h[?25lm[51;73H8[28;8H[?25h[?25l[28;7H[K[51;73H7[28;7H[?25h[?25l[28;6H[K[51;73H6[28;6H[?25h[?25ls[51;73H7[28;7H[?25h[?25l[28;6H[K[51;73H6[28;6H[?25h[?25l[28;5H[K[51;73H5[28;5H[?25h[?25ls[51;73H6[28;6H[?25h[?25lu[51;73H7[28;7H[?25h[?25lm[51;73H8[28;8H[?25h[?25l[51;73H9[28;9H[?25h[?25l+[51;73H10[28;10H[?25h[?25l=[51;74H1[28;11H[?25h[?25l[51;74H2[28;12H[?25h[?25li[51;74H3[28;13H[?25h[?25l;[51;74H4[28;14H[?25h[51;1H[K[28;13H[?25l[51;60H^[[28;13H[51;60H  [28;14H[51;70H28,13[9CAll[28;13H[?25h[?25l[51;60H:[28;13H[51;60H[K[51;1H:[?2004h[?25hw[?25l[?25hq[?25l[?25h[?25l[?2004l"lab8_jsingh51_201.c" 35L, 699C written
+[?2004l[?1l>[?25h[?1049l[23;0;0tbash-4.4$ vim lab8_jsingh51_201.c[C[C[C[C[C[C[C[C[C[C[3P./lab8_jsingh51_201 [C[C[C[C[C[C[C[C[C[Cgcc lab8_jsingh51_201.c -Wall -O2 -o lab8_jsingh51_201
+[01m[Klab8_jsingh51_201.c:[m[K In function ‘[01m[Kmain[m[K’:
+[01m[Klab8_jsingh51_201.c:25:10:[m[K [01;35m[Kwarning: [m[Kstatement with no effect [[01;35m[K-Wunused-value[m[K]
+   for ([01;35m[Ki == 0[m[K; i < count; i++);
+        [01;35m[K~~^~~~[m[K
+[01m[Klab8_jsingh51_201.c:25:3:[m[K [01;35m[Kwarning: [m[Kthis ‘[01m[Kfor[m[K’ clause does not guard... [[01;35m[K-Wmisleading-indentation[m[K]
+   [01;35m[Kfor[m[K (i == 0; i < count; i++);
+   [01;35m[K^~~[m[K
+[01m[Klab8_jsingh51_201.c:26:3:[m[K [01;36m[Knote: [m[K...this statement, but the latter is misleadingly indented as if it were guarded by the ‘[01m[Kfor[m[K’
+   [01;36m[K{[m[K
+   [01;36m[K^[m[K
+[01m[Klab8_jsingh51_201.c:32:3:[m[K [01;35m[Kwarning: [m[K‘[01m[Ki[m[K’ may be used uninitialized in this function [[01;35m[K-Wmaybe-uninitialized[m[K]
+   [01;35m[Kprintf("The sum of integers 0 to %d is: %d\n", count, sum)[m[K;
+   [01;35m[K^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[m[K
+bash-4.4$ gcc lab8_jsingh51_201.c -Wall -O2 -o lab8_jsingh51_201[C[C[C[C[C[C[C[C[C[C[31Pvim lab8_jsingh51_201.c[C[C[C[C[C[C[C[C[C[C[3P./lab8_jsingh51_201 
+Enter an integer -> 10
+i = 10 sum = 10
+The sum of integers 0 to 10 is: 10
+bash-4.4$ ./lab8_jsingh51_201 [C[C[C[C[C[C[C[C[C[Cgcc lab8_jsingh51_201.c -Wall -O2 -o lab8_jsingh51_201[C[C[C[C[C[C[C[C[C[C[31Pvim lab8_jsingh51_201.c
+[?2004h[?1049h[22;0;0t[?1h=[?2004h[1;51r[?12h[?12l[27m[23m[29m[m[H[2J[?25l[51;1H"lab8_jsingh51_201.c" 35L, 699C[2;1H▽[6n[2;1H  [1;1H[>c]10;?]11;?[1;1H[34m/******************************************************
+ * CS262  
+ * Jared Singh
+ * 
+ * Lab8: Debugging Techniques 
+ * GDB Debugger
+ *
+ * This program calculates the sum of the integers from
+ * [m[31m0[m[34m up to (and including) an integer input by the user
+ ******************************************************/[m
+
+[35m#include [m[31m<stdio.h>[m
+[35m#include [m[31m<stdlib.h>[m
+
+[32mint[m main()
+{
+  [32mint[m i, count;
+  [32mint[m sum = [31m0[m;
+  [32mchar[m Buffer[[31m100[m];
+
+  printf([31m"Enter an integer -> "[m);
+  fgets(Buffer, [31m100[m, [31mstdin[m);
+  sscanf(Buffer, [31m"[m[35m%d[m[31m"[m, &count);
+
+  [38;5;130mfor[m (i == [31m0[m; i < count; i++);
+  {
+    [34m//sum = count;[m
+    sum += i;
+    printf([31m"i = [m[35m%d[m[31m sum = [m[35m%d\n[m[31m"[m, i, sum);
+  }
+
+  printf([31m"The sum of integers 0 to [m[35m%d[m[31m is: [m[35m%d\n[m[31m"[m, count, sum);
+
+  [38;5;130mreturn[m [31m0[m;
+}
+[94m~                                                                                      [37;1H~                                                                                      [38;1H~                                                                                      [39;1H~                                                                                      [40;1H~                                                                                      [41;1H~                                                                                      [42;1H~                                                                                      [43;1H~                                                                                      [44;1H~                                                                                      [45;1H~                                                                                      [46;1H~                                                                                      [47;1H~                                                                                      [48;1H~                                                                                      [49;1H~                                                                                      [50;1H~                                                                                      [m[51;70H28,13[9CAll[28;13H[?25h[?12$p[?25l[51;60H~@k[28;13H[51;60H   [27;13H[51;71H7[27;13H[?25h[?25l[51;60H~@k[27;13H[51;60H   [26;3H[106m{[30;3H}[m[51;71H6,3 [26;3H[?25h[?25l[51;60H~@k[26;3H[51;60H   [25;13H
+  {[30;3H}[51;71H5,13[25;13H[?25h[?25l[51;60H~@k[25;13H[51;60H   [25;12H[51;74H2[25;12H[?25h[?25l[51;60H~@k[25;12H[51;60H   [25;11H[51;74H1[25;11H[?25h[?25l[51;60Hi[25;11H[51;60H [25;11H[51;1H[1m-- INSERT --[m[51;13H[K[51;70H25,11[9CAll[25;11H[?25h[?25l [31m0[m; i < count; i++);[25;31H[K[51;74H0[25;10H[?25h[51;1H[K[25;9H[?25l[51;60H^[[25;9H[51;60H  [25;10H[51;70H25,9[10CAll[25;9H[?25h[?25l[51;60H:[25;9H[51;60H[K[51;1H:[?2004h[?25hw[?25l[?25hq[?25l[?25h[?25l[?2004l"lab8_jsingh51_201.c" 35L, 698C written
+[?2004l[?1l>[?25h[?1049l[23;0;0tbash-4.4$ vim lab8_jsingh51_201.c[C[C[C[C[C[C[C[C[C[C[3P./lab8_jsingh51_201 [C[C[C[C[C[C[C[C[C[Cgcc lab8_jsingh51_201.c -Wall -O2 -o lab8_jsingh51_201
+[01m[Klab8_jsingh51_201.c:[m[K In function ‘[01m[Kmain[m[K’:
+[01m[Klab8_jsingh51_201.c:25:3:[m[K [01;35m[Kwarning: [m[Kthis ‘[01m[Kfor[m[K’ clause does not guard... [[01;35m[K-Wmisleading-indentation[m[K]
+   [01;35m[Kfor[m[K (i = 0; i < count; i++);
+   [01;35m[K^~~[m[K
+[01m[Klab8_jsingh51_201.c:26:3:[m[K [01;36m[Knote: [m[K...this statement, but the latter is misleadingly indented as if it were guarded by the ‘[01m[Kfor[m[K’
+   [01;36m[K{[m[K
+   [01;36m[K^[m[K
+bash-4.4$ gcc lab8_jsingh51_201.c -Wall -O2 -o lab8_jsingh51_201[C[C[C[C[C[C[C[C[C[C[31Pvim lab8_jsingh51_201.c[C[C[C[C[C[C[C[C[C[C[3P./lab8_jsingh51_201 
+Enter an integer -> 10
+i = 10 sum = 10
+The sum of integers 0 to 10 is: 10
+bash-4.4$ ./lab8_jsingh51_201 [C[C[C[C[C[C[C[C[C[Cgcc lab8_jsingh51_201.c -Wall -O2 -o lab8_jsingh51_201[C[C[C[C[C[C[C[C[C[C[31Pvim lab8_jsingh51_201.c
+[?2004h[?1049h[22;0;0t[?1h=[?2004h[1;51r[?12h[?12l[27m[23m[29m[m[H[2J[?25l[51;1H"lab8_jsingh51_201.c" 35L, 698C[2;1H▽[6n[2;1H  [1;1H[>c]10;?]11;?[1;1H[34m/******************************************************
+ * CS262  
+ * Jared Singh
+ * 
+ * Lab8: Debugging Techniques 
+ * GDB Debugger
+ *
+ * This program calculates the sum of the integers from
+ * [m[31m0[m[34m up to (and including) an integer input by the user
+ ******************************************************/[m
+
+[35m#include [m[31m<stdio.h>[m
+[35m#include [m[31m<stdlib.h>[m
+
+[32mint[m main()
+{
+  [32mint[m i, count;
+  [32mint[m sum = [31m0[m;
+  [32mchar[m Buffer[[31m100[m];
+
+  printf([31m"Enter an integer -> "[m);
+  fgets(Buffer, [31m100[m, [31mstdin[m);
+  sscanf(Buffer, [31m"[m[35m%d[m[31m"[m, &count);
+
+  [38;5;130mfor[m (i = [31m0[m; i < count; i++);
+  {
+    [34m//sum = count;[m
+    sum += i;
+    printf([31m"i = [m[35m%d[m[31m sum = [m[35m%d\n[m[31m"[m, i, sum);
+  }
+
+  printf([31m"The sum of integers 0 to [m[35m%d[m[31m is: [m[35m%d\n[m[31m"[m, count, sum);
+
+  [38;5;130mreturn[m [31m0[m;
+}
+[94m~                                                                                      [37;1H~                                                                                      [38;1H~                                                                                      [39;1H~                                                                                      [40;1H~                                                                                      [41;1H~                                                                                      [42;1H~                                                                                      [43;1H~                                                                                      [44;1H~                                                                                      [45;1H~                                                                                      [46;1H~                                                                                      [47;1H~                                                                                      [48;1H~                                                                                      [49;1H~                                                                                      [50;1H~                                                                                      [m[51;70H25,9[10CAll[25;9H[?25h[?12$p[?25l[51;60H~@k[25;9H[51;60H   [26;3H[106m{[30;3H}[m[51;71H6,3[26;3H[?25h[?25l[51;60H~@k[26;3H[51;60H   [27;9H[26;3H{[30;3H}[51;71H7,9[27;9H[?25h[?25l[51;60H~@k[27;9H[51;60H   [26;3H[106m{[30;3H}[m[51;71H6,3[26;3H[?25h[?25l[51;60H~@k[26;3H[51;60H   [26;2H {[30;3H}[51;73H2[26;2H[?25h[?25l[51;60H~@k[26;2H[51;60H   [25;2H[51;71H5[25;2H[?25h[?25l[51;60H~@k[25;2H[51;60H   [25;3H[51;73H3[25;3H[?25h[?25l[51;60H~@*[25;3H[51;60H   [25;30H[51;74H0[25;30H[?25h[?25l[51;60H~@#[25;30H[51;60H   [25;27H[51;73H27[25;27H[?25h[?25l[51;60H~@k[25;27H[51;60H   [25;1H[51;73H1 [25;1H[?25h[?25l[51;60H~@k[25;1H[51;60H   [25;2H[51;73H2[25;2H[?25h[?25l[51;60H~@k[25;2H[51;60H   [25;3H[51;73H3[25;3H[?25h[?25l[51;60H~@*[25;3H[51;60H   [25;30H[51;74H0[25;30H[?25h[?25l[51;60H~@k[25;30H[51;60H   [25;1H[51;73H1 [25;1H[?25h[?25l[51;60H~@k[25;1H[51;60H   [25;2H[51;73H2[25;2H[?25h[?25l[51;60H~@k[25;2H[51;60H   [25;3H[51;73H3[25;3H[?25h[?25l[51;60Hi[25;3H[51;60H [25;3H[51;1H[1m-- INSERT --[m[51;13H[K[51;70H25,3[10CAll[25;3H[?25h[?25l[51;74H1[25;31H[?25h[?25l[25;7H[106m([21C)[m[51;74H0[25;30H[?25h[?25l[25;7H([21C)[51;73H27[25;27H[?25h[?25l[51;74H6[25;26H[?25h[?25l[51;74H4[25;24H[?25h[?25l[51;73H19[25;19H[?25h[?25l[51;74H7[25;17H[?25h[?25l[51;74H5[25;15H[?25h[?25l[51;74H3[25;13H[?25h[?25l[51;74H2[25;12H[?25h[?25l[51;74H0[25;10H[?25h[?25l[106m([21C)[m[51;73H8 [25;8H[?25h[?25l[51;73H7[25;7H[?25h[?25l([21C)[51;73H3[25;3H[?25h[?25l[51;73H2[25;2H[?25h[?25l[51;73H3[25;3H[?25h[?25l/[38;5;130mfor[m (i = [31m0[m; i < count; i++);[51;73H4[25;4H[?25h[?25l[34m//for (i = [m[31m0[m[34m; i < count; i++);[m[51;73H5[25;5H[?25h[?25l[51;73H33[25;33H[?25h[?25l[26;50r[26;1H[L[1;51r[26;3H[34m//[m[51;70H[K[51;70H26,5[10CAll[26;5H[?25h[?25l/[26;4H[K[51;73H4[26;4H[?25h[?25l[26;3H[K[51;73H3[26;3H[?25h[?25l [38;5;130mfor[m (i = [31m0[m; i < count; i++);[51;74H2[26;32H[?25h[?25l[26;31H[K[26;8H[106m([21C)[m[51;74H1[26;31H[?25h[?25l[26;8H([21C)[51;73H1 [26;1H[?25h[?25l  [38;5;130mfor[m (i = [31m0[m; i < count; i++)[26;30H[K[26;1H[?25h[51;1H[K[26;1H[?25l[51;60H^[[26;1H[51;60H  [26;1H[51;70H26,1[10CAll[26;1H[?25h[?25l[51;60H:[26;1H[51;60H[K[51;1H:[?2004h[?25hw[?25l[?25hq[?25l[?25h[?25l[?2004l"lab8_jsingh51_201.c" 36L, 730C written
+[?2004l[?1l>[?25h[?1049l[23;0;0tbash-4.4$ vim lab8_jsingh51_201.c[C[C[C[C[C[C[C[C[C[C[3P./lab8_jsingh51_201 [C[C[C[C[C[C[C[C[C[Cgcc lab8_jsingh51_201.c -Wall -O2 -o lab8_jsingh51_201
+bash-4.4$ gcc lab8_jsingh51_201.c -Wall -O2 -o lab8_jsingh51_201[C[C[C[C[C[C[C[C[C[C[31Pvim lab8_jsingh51_201.c[C[C[C[C[C[C[C[C[C[C[3P./lab8_jsingh51_201 
+Enter an integer -> 10
+i = 0 sum = 0
+i = 1 sum = 1
+i = 2 sum = 3
+i = 3 sum = 6
+i = 4 sum = 10
+i = 5 sum = 15
+i = 6 sum = 21
+i = 7 sum = 28
+i = 8 sum = 36
+i = 9 sum = 45
+The sum of integers 0 to 10 is: 45
+bash-4.4$ ./lab8_jsingh51_201 [C[C[C[C[C[C[C[C[C[Cgcc lab8_jsingh51_201.c -Wall -O2 -o lab8_jsingh51_201[C[C[C[C[C[C[C[C[C[C[31Pvim lab8_jsingh51_201.c
+[?2004h[?1049h[22;0;0t[?1h=[?2004h[1;51r[?12h[?12l[27m[23m[29m[m[H[2J[?25l[51;1H"lab8_jsingh51_201.c" 36L, 730C[2;1H▽[6n[2;1H  [1;1H[>c]10;?]11;?[1;1H[34m/******************************************************
+ * CS262  
+ * Jared Singh
+ * 
+ * Lab8: Debugging Techniques 
+ * GDB Debugger
+ *
+ * This program calculates the sum of the integers from
+ * [m[31m0[m[34m up to (and including) an integer input by the user
+ ******************************************************/[m
+
+[35m#include [m[31m<stdio.h>[m
+[35m#include [m[31m<stdlib.h>[m
+
+[32mint[m main()
+{
+  [32mint[m i, count;
+  [32mint[m sum = [31m0[m;
+  [32mchar[m Buffer[[31m100[m];
+
+  printf([31m"Enter an integer -> "[m);
+  fgets(Buffer, [31m100[m, [31mstdin[m);
+  sscanf(Buffer, [31m"[m[35m%d[m[31m"[m, &count);
+
+  [34m//for (i = [m[31m0[m[34m; i < count; i++);[m
+  [38;5;130mfor[m (i = [31m0[m; i < count; i++)
+  {
+    [34m//sum = count;[m
+    sum += i;
+    printf([31m"i = [m[35m%d[m[31m sum = [m[35m%d\n[m[31m"[m, i, sum);
+  }
+
+  printf([31m"The sum of integers 0 to [m[35m%d[m[31m is: [m[35m%d\n[m[31m"[m, count, sum);
+
+  [38;5;130mreturn[m [31m0[m;
+}
+[94m~                                                                                      [38;1H~                                                                                      [39;1H~                                                                                      [40;1H~                                                                                      [41;1H~                                                                                      [42;1H~                                                                                      [43;1H~                                                                                      [44;1H~                                                                                      [45;1H~                                                                                      [46;1H~                                                                                      [47;1H~                                                                                      [48;1H~                                                                                      [49;1H~                                                                                      [50;1H~                                                                                      [m[51;70H26,1[10CAll[26;1H[?25h[?12$p[?25l[51;60H~@k[26;1H[51;60H   [27;1H[51;71H7[27;1H[?25h[?25l[51;60H~@k[27;1H[51;60H   [28;1H[51;71H8[28;1H[?25h[?25l[51;60H~@k[28;1H[51;60H   [29;1H[51;71H9[29;1H[?25h[?25l[51;60H~@k[29;1H[51;60H   [28;1H[51;71H8[28;1H[?25h[?25l[51;60H~@k[28;1H[51;60H   [27;1H[51;71H7[27;1H[?25h[?25l[51;60H~@k[27;1H[51;60H   [26;1H[51;71H6[26;1H[?25h[?25l[51;60H~@k[26;1H[51;60H   [25;1H[51;71H5[25;1H[?25h[?25l[51;60H~@k[25;1H[51;60H   [26;1H[51;71H6[26;1H[?25h[?25l[51;60Hi[26;1H[51;60H [26;1H[51;1H[1m-- INSERT --[m[51;13H[K[51;70H26,1[10CAll[26;1H[?25h[?25l[51;73H2[26;2H[?25h[?25l[51;73H3[26;3H[?25h[?25l/[38;5;130mfor[m (i = [31m0[m; i < count; i++)[51;73H4[26;4H[?25h[?25l[34m//for (i = [m[31m0[m[34m; i < count; i++)[m[51;73H5[26;5H[?25h[?25l[51;73H32[26;32H[?25h[?25l[27;50r[27;1H[L[1;51r[27;3H[34m//[m[51;70H[K[51;70H27,5[10CAll[27;5H[?25h[?25l[34m for (i = [m[31m0[m[34m; i < count; i++);[m[51;73H34[27;34H[?25h[?25l[27;33H[K[51;74H3[27;33H[?25h[?25l[51;74H0[27;30H[?25h[?25l[51;73H29[27;29H[?25h[?25l[51;74H7[27;27H[?25h[?25l[51;74H2[27;22H[?25h[?25l[51;74H0[27;20H[?25h[?25l[51;73H18[27;18H[?25h[?25l[51;74H6[27;16H[?25h[?25l[51;74H5[27;15H[?25h[?25l[51;74H3[27;13H[?25h[?25l[51;74H1[27;11H[?25h[?25l[51;74H0[27;10H[?25h[?25l[51;73H6 [27;6H[?25h[?25l[51;73H3[27;3H[?25h[?25l[51;73H6[27;6H[?25h[?25l[34mfor (i = [m[31m0[m[34m; i < count; i++)[m[27;32H[K[51;73H5[27;5H[?25h[?25l/[38;5;130mfor[m (i = [31m0[m; i < count; i++)[27;31H[K[51;73H4[27;4H[?25h[?25l[38;5;130mfor[m (i = [31m0[m; i < count; i++)[27;30H[K[51;73H3[27;3H[?25h[?25l[51;73H4[27;4H[?25h[?25l[51;73H5[27;5H[?25h[?25l[51;73H6[27;6H[?25h[?25l [106m([21C)[m[51;73H7[27;7H[?25h[?25l[51;73H8[27;8H[?25h[?25l([21C)[51;73H9[27;9H[?25h[?25l[51;73H10[27;10H[?25h[?25l[51;74H1[27;11H[?25h[?25l[51;74H2[27;12H[?25h[?25l[51;74H3[27;13H[?25h[?25l[51;74H4[27;14H[?25h[?25l[51;74H5[27;15H[?25h[?25l[51;74H6[27;16H[?25h[?25l[51;74H7[27;17H[?25h[?25l[51;74H8[27;18H[?25h[?25l[51;74H7[27;17H[?25h[?25l=< count; i++)[51;74H8[27;18H[?25h[?25l< count; i++)[27;30H[K[51;74H7[27;17H[?25h[?25l[51;74H8[27;18H[?25h[?25l= count; i++)[51;74H9[27;19H[?25h[?25l
+  [106m{[32;3H}[m[51;71H8,4 [28;4H[?25h[?25l{[32;3H}[51;71H9,19[29;19H[?25h[?25l[51;70H30,14[30;14H[?25h[?25l[51;71H1,19[31;19H[?25h[?25l[51;71H0,14[30;14H[?25h[?25l[51;71H1,19[31;19H[?25h[?25l[28;3H[106m{[32;3H}[m[51;71H2,4 [32;4H[?25h[51;1H[K[32;3H[?25l[51;60H^[[32;3H[51;60H  [32;4H[51;70H32,3[10CAll[32;3H[?25h[?25l[51;60H:[32;3H[51;60H[K[51;1H:[?2004h[?25hw[?25l[?25hq[?25l[?25h[?25l[?2004l"lab8_jsingh51_201.c" 37L, 763C written
+[?2004l[?1l>[?25h[?1049l[23;0;0tbash-4.4$ vim lab8_jsingh51_201.c[C[C[C[C[C[C[C[C[C[C[3P./lab8_jsingh51_201 [C[C[C[C[C[C[C[C[C[Cgcc lab8_jsingh51_201.c -Wall -O2 -o lab8_jsingh51_201[C[C[C[C[C[C[C[C[C[C[34P./lab8_jsingh51_201 [C[C[C[C[C[C[C[C[C[Cgcc lab8_jsingh51_201.c -Wall -O2 -o lab8_jsingh51_201
+bash-4.4$ gcc lab8_jsingh51_201.c -Wall -O2 -o lab8_jsingh51_201[C[C[C[C[C[C[C[C[C[C[31Pvim lab8_jsingh51_201.c[C[C[C[C[C[C[C[C[C[C[3P./lab8_jsingh51_201 
+Enter an integer -> 10
+i = 0 sum = 0
+i = 1 sum = 1
+i = 2 sum = 3
+i = 3 sum = 6
+i = 4 sum = 10
+i = 5 sum = 15
+i = 6 sum = 21
+i = 7 sum = 28
+i = 8 sum = 36
+i = 9 sum = 45
+i = 10 sum = 55
+The sum of integers 0 to 10 is: 55
+bash-4.4$ vi./lab8_jsingh51_201 [C[C[C[C[C[C[C[C[C[Cgcc lab8_jsingh51_201.c -Wall -O2 -o lab8_jsingh51_201[C[C[C[C[C[C[C[C[C[C[31Pvim lab8_jsingh51_201.c
+[?2004h[?1049h[22;0;0t[?1h=[?2004h[1;51r[?12h[?12l[27m[23m[29m[m[H[2J[?25l[51;1H"lab8_jsingh51_201.c" 37L, 763C[2;1H▽[6n[2;1H  [1;1H[>c]10;?]11;?[1;1H[34m/******************************************************
+ * CS262  
+ * Jared Singh
+ * 
+ * Lab8: Debugging Techniques 
+ * GDB Debugger
+ *
+ * This program calculates the sum of the integers from
+ * [m[31m0[m[34m up to (and including) an integer input by the user
+ ******************************************************/[m
+
+[35m#include [m[31m<stdio.h>[m
+[35m#include [m[31m<stdlib.h>[m
+
+[32mint[m main()
+{
+  [32mint[m i, count;
+  [32mint[m sum = [31m0[m;
+  [32mchar[m Buffer[[31m100[m];
+
+  printf([31m"Enter an integer -> "[m);
+  fgets(Buffer, [31m100[m, [31mstdin[m);
+  sscanf(Buffer, [31m"[m[35m%d[m[31m"[m, &count);
+
+  [34m//for (i = [m[31m0[m[34m; i < count; i++);
+[m  [34m//for (i = [m[31m0[m[34m; i < count; i++)[m
+  [38;5;130mfor[m (i = [31m0[m; i <= count; i++)
+  [106m{[m
+    [34m//sum = count;[m
+    sum += i;
+    printf([31m"i = [m[35m%d[m[31m sum = [m[35m%d\n[m[31m"[m, i, sum);
+  [106m}[m
+
+  printf([31m"The sum of integers 0 to [m[35m%d[m[31m is: [m[35m%d\n[m[31m"[m, count, sum);
+
+  [38;5;130mreturn[m [31m0[m;
+}
+[94m~                                                                                      [39;1H~                                                                                      [40;1H~                                                                                      [41;1H~                                                                                      [42;1H~                                                                                      [43;1H~                                                                                      [44;1H~                                                                                      [45;1H~                                                                                      [46;1H~                                                                                      [47;1H~                                                                                      [48;1H~                                                                                      [49;1H~                                                                                      [50;1H~                                                                                      [m[51;70H32,3[10CAll[32;3H[?25h[?12$p[?25l[51;60H~@k[32;3H[51;60H   [31;3H[28;3H{[32;3H}[51;71H1[31;3H[?25h[?25l[51;60H~@k[31;3H[51;60H   [30;3H[51;71H0[30;3H[?25h[?25l[51;60H~@k[30;3H[51;60H   [29;3H[51;70H29[29;3H[?25h[?25l[51;60H~@k[29;3H[51;60H   [28;3H[106m{[32;3H}[m[51;71H8[28;3H[?25h[?25l[51;60H~@k[28;3H[51;60H   [27;3H
+  {[32;3H}[51;71H7[27;3H[?25h[?25l[51;60H~@k[27;3H[51;60H   [26;3H[51;71H6[26;3H[?25h[?25l[51;60H~@k[26;3H[51;60H   [25;3H[51;71H5[25;3H[?25h[?25l[51;60H~@k[25;3H[51;60H   [24;1H[51;71H4,0-1[24;1H[?25h[?25l[51;60H~@k[24;1H[51;60H   [23;3H[51;71H3,3  [23;3H[?25h[?25l[51;60H~@k[23;3H[51;60H   [22;3H[51;71H2[22;3H[?25h[?25l[51;60H~@k[22;3H[51;60H   [21;3H[51;71H1[21;3H[?25h[?25l[51;60H~@k[21;3H[51;60H   [20;1H[51;71H0,0-1[20;1H[?25h[?25l[51;60H~@k[20;1H[51;60H   [19;3H[51;70H19,3  [19;3H[?25h[?25l[51;60H~@k[19;3H[51;60H   [18;3H[51;71H8[18;3H[?25h[?25l[51;60Hi[18;3H[51;60H [18;3H[51;1H[1m-- INSERT --[m[51;13H[K[51;70H18,3[10CAll[18;3H[?25h[?25l/[32mint[m sum = [31m0[m;[51;73H4[18;4H[?25h[?25l[34m//int sum = [m[31m0[m[34m;[m[51;73H5[18;5H[?25h[?25l[51;73H17[18;17H[?25h[?25l[19;50r[19;1H[L[1;51r[19;3H[34m//[m[51;70H[K[51;70H19,5[10CAll[19;5H[?25h[?25l/[19;4H[K[51;73H4[19;4H[?25h[?25l[19;3H[K[51;73H3[19;3H[?25h[?25li[51;73H4[19;4H[?25h[?25ln[51;73H5[19;5H[?25h[?25l[32mint[m[51;73H6[19;6H[?25h[?25l[51;73H7[19;7H[?25h[?25ls[51;73H8[19;8H[?25h[?25lu[51;73H9[19;9H[?25h[?25lm[51;73H10[19;10H[?25h[?25l[51;74H1[19;11H[?25h[?25l[51;74H0[19;10H[?25h[?25l;[51;74H1[19;11H[?25h[51;1H[K[19;10H[?25l[51;60H^[[19;10H[51;60H  [19;11H[51;70H19,10[9CAll[19;10H[?25h[?25l[51;60H:[19;10H[51;60H[K[51;1H:[?2004h[?25hw[?25l[?25hq[?25l[?25h[?25l[?2004l"lab8_jsingh51_201.c" 38L, 776C written
+[?2004l[?1l>[?25h[?1049l[23;0;0tbash-4.4$ vim lab8_jsingh51_201.c[C[C[C[C[C[C[C[C[C[C[3P./lab8_jsingh51_201 [C[C[C[C[C[C[C[C[C[Cgcc lab8_jsingh51_201.c -Wall -O2 -o lab8_jsingh51_201
+[01m[Klab8_jsingh51_201.c:[m[K In function ‘[01m[Kmain[m[K’:
+[01m[Klab8_jsingh51_201.c:35:3:[m[K [01;35m[Kwarning: [m[K‘[01m[Ksum[m[K’ may be used uninitialized in this function [[01;35m[K-Wmaybe-uninitialized[m[K]
+   [01;35m[Kprintf("The sum of integers 0 to %d is: %d\n", count, sum)[m[K;
+   [01;35m[K^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[m[K
+bash-4.4$ gcc lab8_jsingh51_201.c -Wall -O2 -o lab8_jsingh51_201[C[C[C[C[C[C[C[C[C[C[31Pvim lab8_jsingh51_201.c[C[C[C[C[C[C[C[C[C[C[3P./lab8_jsingh51_201 
+Enter an integer -> 10
+i = 0 sum = 4196128
+i = 1 sum = 4196129
+i = 2 sum = 4196131
+i = 3 sum = 4196134
+i = 4 sum = 4196138
+i = 5 sum = 4196143
+i = 6 sum = 4196149
+i = 7 sum = 4196156
+i = 8 sum = 4196164
+i = 9 sum = 4196173
+i = 10 sum = 4196183
+The sum of integers 0 to 10 is: 4196183
+bash-4.4$ exit
+
+Script done on 2024-03-23 11:01:46-04:00

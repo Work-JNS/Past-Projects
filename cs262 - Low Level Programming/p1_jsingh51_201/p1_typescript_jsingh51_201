@@ -1,0 +1,811 @@
+Script started on 2024-03-01 10:05:17-05:00
+bash-4.4$ uname -a
+Linux zeus-2.cec.gmu.edu 4.18.0-348.23.1.el8_5.x86_64 #1 SMP Tue Apr 12 11:20:32 EDT 2022 x86_64 x86_64 x86_64 GNU/Linux
+bash-4.4$ date
+Fri Mar  1 10:05:27 EST 2024
+bash-4.4$ ls
+Makefile  p1_jsingh51_201  p1_jsingh51_201.c  p1_typescript_jsingh51_201
+bash-4.4$ pwed[K[Kd
+/home/jsingh51/CS262/p1_jsingh51_201
+bash-4.4$ [Kbash-4.4$ cc[Kar p1_k[Kjsingh51_201.c [K
+bash: car: command not found
+bash-4.4$ car p1_jsingh51_201.c[1P p1_jsingh51_201.c[C[C[C[C[C[C[C[C[C[C[C[Ct p1_jsingh51_201.c[C[C[C[C[C[C[C[C[C[C[C[C[C
+/*
+    Jared Singh, G01416039
+    CS 262, Lab Section 201
+    Project 1
+
+    Character Soup
+
+*/
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <time.h>
+#define SOUPSIZE 11
+
+
+/*----- Menu Functions -----*/
+
+// checks if an input is valid
+//  return 1 if valid
+//  print invalid & return 0 if invald
+int is_Valid_Input(int input)
+{
+    if (input > 0 && input < 5)
+        return 1;
+    else
+    {
+        printf("Option %d, is not an option\n", input);
+        return 0;
+    }
+}
+
+// Prompts User for name
+// continue prompting until valid input
+// set rv pointer to name
+void set_name(char *rv)
+{
+    short valid = 1;
+    char name[26];
+
+    // Gets name - Prompts user to input their name until name is < 25 chars & only letters
+    do
+    {
+        if (valid != 1) // resets the valid check
+        {
+            valid = 1;
+            name[0] = '\0';
+        }
+
+        printf("Please Enter Your Name: ");
+
+        fgets(name, sizeof(name), stdin); // get a string input from the user
+
+        for (int i = 0; i < strlen(name) - 1; i++) // check each index: if invalid: valid = 0 & reiterate while loop
+        {
+            int x = name[i];
+
+            if (x >= 65 && x <= 90)
+                continue;
+            else if (x >= 97 && x <= 122)
+                continue;
+            else if (x == 32)
+                continue;
+            else
+            {
+                valid = 0;
+                break;
+            }
+        }
+
+    } while (valid != 1);
+
+    strcpy(rv, name);
+}
+
+/*----- Soup Functions -----*/
+
+// prints ACII code of a soup
+void printSoupCode(char soup[])
+{
+    printf("[");
+    for (int i = 0; i < SOUPSIZE - 1; i++)
+    {
+        printf("%d ", soup[i]);
+    }
+    printf("]\n");
+}
+
+// Returns # of matches and formats matches string
+int calcPoints(char userSoup[], char gameSoup[], char *matches)
+{
+    int match = 0;
+    for (int i = 0; i < SOUPSIZE - 1; i++)
+    {
+        if (userSoup[i] == gameSoup[i])
+        {
+            match++;
+            matches[i] = 'X';
+        }
+    }
+    return match;
+}
+
+// Soup Functions
+void mixed_soup(char name[])
+{
+    char soup[SOUPSIZE], psoup[SOUPSIZE], csoup[SOUPSIZE];
+    int pTotMtcScr = 0, pRndScr = 0, cTotMtcScr = 0, cRndScr = 0;
+    int round = 1;
+
+    printf("\n****************************\n*       Number Soup        *\n");
+    printf("****************************\n");
+    while (round < 11)
+    {
+
+        for (int i = 0; i < SOUPSIZE - 1; i++)
+        {
+            int valid = 1;
+            // The first slot needs no check
+            if (i < 1)
+            {
+                soup[i] = (rand() % (126 + 1 - 33)) + 33;
+                psoup[i] = (rand() % (126 + 1 - 33)) + 33;
+                csoup[i] = (rand() % (126 + 1 - 33)) + 33;
+            }
+            else
+            {
+
+                do
+                {
+                    // reset valid coutner
+                    valid = 1;
+                    // generate random int
+                    soup[i] = (rand() % (126 + 1 - 33)) + 33;
+
+                    // if int = prev entry
+                    // if int = prev entry +/- 1, valid = 0
+                    if ((soup[i - 1] == soup[i]) || (soup[i - 1] == soup[i] + 1) || (soup[i - 1] == soup[i] - 1))
+                        valid = 0;
+
+                } while (valid == 0);
+                // SAME AS FIRST
+                do
+                {
+                    valid = 1;
+                    csoup[i] = (rand() % (126 + 1 - 33)) + 33;
+                    if ((csoup[i - 1] == csoup[i]) || (csoup[i - 1] == csoup[i] + 1) || (csoup[i - 1] == csoup[i] - 1))
+                        valid = 0;
+
+                } while (valid == 0);
+                // SAME AS FIRST
+                do
+                {
+                    valid = 1;
+                    psoup[i] = (rand() % (126 + 1 - 33)) + 33;
+                    if ((psoup[i - 1] == psoup[i]) || (psoup[i - 1] == psoup[i] + 1) || (psoup[i - 1] == psoup[i] - 1))
+                        valid = 0;
+
+                } while (valid == 0);
+            }
+        }
+
+        // Size doubles if I don't t=do this
+        csoup[10] = '\0';
+        psoup[10] = '\0';
+
+        // Vars for interface
+        char cMatches[SOUPSIZE] = "----------";
+        char pMatches[SOUPSIZE] = "----------";
+        int pMatch = 0;
+        int cMatch = 0;
+
+        // print scores and prompt continue
+
+        printf("%s, match points: %d round points: %d\n", name, pTotMtcScr, pRndScr);
+        printf("Computer, match points: %d round points: %d\n\n", cTotMtcScr, cRndScr);
+        if (round == 1)
+            printf("[Play]");
+        else
+            printf("[Contiune]");
+        getchar(); // pauses until return is pressed
+
+        // print current soup
+        printf("\nRound: %d/10\nSoup: [%s]\nSoup Code: ", round, soup);
+        printSoupCode(soup);
+        printf("\n************************************\n");
+
+        pMatch = calcPoints(psoup, soup, pMatches);
+
+        // Player stats
+        printf("%s's soup: [%s]\nSoup Code: ", name, psoup);
+        printSoupCode(psoup);
+        printf("Match: %d [%s]\n\n", pMatch, pMatches);
+
+        cMatch = calcPoints(csoup, soup, cMatches);
+
+        // Computer Stats
+        printf("Computer's soup: [%s]\nSoup Code: ", csoup);
+        printSoupCode(csoup);
+        printf("Match: %d [%s]\n", cMatch, cMatches);
+
+        // if tie +2 for both round score
+        if (pMatch == cMatch)
+        {
+            cRndScr += 2;
+            pRndScr += 2;
+        }
+        else if (pMatch > cMatch) // if player wins +5 to player round score
+            pRndScr += 5;
+        else // if computer wins
+            cRndScr += 5;
+
+        // add round matches to total match score
+        pTotMtcScr += pMatch;
+        cTotMtcScr += cMatch;
+        // increment round
+        round++;
+    }
+    // exit score and winner decalres
+    int pTot = pTotMtcScr + pRndScr;
+    int cTot = cTotMtcScr + cRndScr;
+    printf("\n%s, score:%d \n     match points: %d round points: %d\n", name, pTot, pTotMtcScr, pRndScr);
+    printf("\nComputer's, score:%d \n     match points: %d round points: %d\n", cTot, cTotMtcScr, cRndScr);
+    if (cTot == pTot)
+        printf("\nIt is a Tie");
+    else if (cTot > pTot)
+        printf("Computer Wins");
+    else
+        printf("%s Wins", name);
+}
+void alphabet_soup(char name[])
+{
+    char soup[SOUPSIZE], psoup[SOUPSIZE], csoup[SOUPSIZE];
+    int pTotMtcScr = 0, pRndScr = 0, cTotMtcScr = 0, cRndScr = 0;
+    int round = 1;
+
+    printf("\n****************************\n*      Alphabet Soup       *\n");
+    printf("****************************\n");
+    while (round < 11)
+    {
+
+        for (int i = 0; i < SOUPSIZE - 1; i++)
+        {
+            int valid = 1;
+            // The first slot needs no check
+            if (i < 1)
+            {
+                soup[i] = (rand() % (90 + 1 - 65)) + 65;
+                psoup[i] = (rand() % (90 + 1 - 65)) + 65;
+                csoup[i] = (rand() % (90 + 1 - 65)) + 65;
+            }
+            else
+            {
+
+                do
+                {
+                    // reset valid coutner
+                    valid = 1;
+                    // generate random int
+                    soup[i] = (rand() % (90 + 1 - 65)) + 65;
+
+                    // if int = prev entry
+                    // if int = prev entry +/- 1, valid = 0
+                    if ((soup[i - 1] == soup[i]) || (soup[i - 1] == soup[i] + 1) || (soup[i - 1] == soup[i] - 1))
+                        valid = 0;
+
+                } while (valid == 0);
+                // SAME AS FIRST
+                do
+                {
+                    valid = 1;
+                    csoup[i] = (rand() % (90 + 1 - 65)) + 65;
+                    if ((csoup[i - 1] == csoup[i]) || (csoup[i - 1] == csoup[i] + 1) || (csoup[i - 1] == csoup[i] - 1))
+                        valid = 0;
+
+                } while (valid == 0);
+                // SAME AS FIRST
+                do
+                {
+                    valid = 1;
+                    psoup[i] = (rand() % (90 + 1 - 65)) + 65;
+                    if ((psoup[i - 1] == psoup[i]) || (psoup[i - 1] == psoup[i] + 1) || (psoup[i - 1] == psoup[i] - 1))
+                        valid = 0;
+
+                } while (valid == 0);
+            }
+
+            int upper = rand() % 2;
+            if (upper == 1)
+            {
+                soup[i] += 32;
+            }
+            upper = rand() % 2;
+            if (upper == 1)
+            {
+                psoup[i] += 32;
+            }
+            upper = rand() % 2;
+            if (upper == 1)
+            {
+                csoup[i] += 32;
+            }
+        }
+
+        // Size doubles if I don't do this
+        csoup[10] = '\0';
+        psoup[10] = '\0';
+
+        // Vars for interface
+        char cMatches[SOUPSIZE] = "----------";
+        char pMatches[SOUPSIZE] = "----------";
+        int pMatch = 0;
+        int cMatch = 0;
+
+        // print scores and prompt continue
+
+        printf("%s, match points: %d round points: %d\n", name, pTotMtcScr, pRndScr);
+        printf("Computer, match points: %d round points: %d\n\n", cTotMtcScr, cRndScr);
+        if (round == 1)
+            printf("[Play]");
+        else
+            printf("[Contiune]");
+        getchar(); // pauses until return is pressed
+
+        // print current soup
+        printf("\nRound: %d/10\nSoup: [%s]\nSoup Code: ", round, soup);
+        printSoupCode(soup);
+        printf("\n************************************\n");
+
+        pMatch = calcPoints(psoup, soup, pMatches);
+
+        // Player stats
+        printf("%s's soup: [%s]\nSoup Code: ", name, psoup);
+        printSoupCode(psoup);
+        printf("Match: %d [%s]\n\n", pMatch, pMatches);
+
+        cMatch = calcPoints(csoup, soup, cMatches);
+
+        // Computer Stats
+        printf("Computer's soup: [%s]\nSoup Code: ", csoup);
+        printSoupCode(csoup);
+        printf("Match: %d [%s]\n", cMatch, cMatches);
+
+        // if tie +2 for both round score
+        if (pMatch == cMatch)
+        {
+            cRndScr += 2;
+            pRndScr += 2;
+        }
+        else if (pMatch > cMatch) // if player wins +5 to player round score
+            pRndScr += 5;
+        else // if computer wins
+            cRndScr += 5;
+
+        // add round matches to total match score
+        pTotMtcScr += pMatch;
+        cTotMtcScr += cMatch;
+        // increment round
+        round++;
+    }
+    // exit score and winner decalres
+    int pTot = pTotMtcScr + pRndScr;
+    int cTot = cTotMtcScr + cRndScr;
+    printf("\n%s, score:%d \n     match points: %d round points: %d\n", name, pTot, pTotMtcScr, pRndScr);
+    printf("\nComputer's, score:%d \n     match points: %d round points: %d\n", cTot, cTotMtcScr, cRndScr);
+    if (cTot == pTot)
+        printf("\nIt is a Tie");
+    else if (cTot > pTot)
+        printf("Computer Wins");
+    else
+        printf("%s Wins", name);
+}
+void number_soup(char name[])
+{
+    char soup[SOUPSIZE], psoup[SOUPSIZE], csoup[SOUPSIZE];
+    int pTotMtcScr = 0, pRndScr = 0, cTotMtcScr = 0, cRndScr = 0;
+    int round = 1;
+
+    printf("\n****************************\n*       Number Soup        *\n");
+    printf("****************************\n");
+    while (round < 11)
+    {
+
+        for (int i = 0; i < SOUPSIZE - 1; i++)
+        {
+            int valid = 1;
+            // The first slot needs no check
+            if (i < 1)
+            {
+                soup[i] = (rand() % (57 + 1 - 48)) + 48;
+                psoup[i] = (rand() % (57 + 1 - 48)) + 48;
+                csoup[i] = (rand() % (57 + 1 - 48)) + 48;
+            }
+            else
+            {
+
+                do
+                {
+                    // reset valid coutner
+                    valid = 1;
+                    // generate random int
+                    soup[i] = (rand() % (57 + 1 - 48)) + 48;
+
+                    // if int = prev entry
+                    // if int = prev entry +/- 1, valid = 0
+                    if ((soup[i - 1] == soup[i]) || (soup[i - 1] == soup[i] + 1) || (soup[i - 1] == soup[i] - 1))
+                        valid = 0;
+
+                } while (valid == 0);
+                // SAME AS FIRST
+                do
+                {
+                    valid = 1;
+                    csoup[i] = (rand() % (57 + 1 - 48)) + 48;
+                    if ((csoup[i - 1] == csoup[i]) || (csoup[i - 1] == csoup[i] + 1) || (csoup[i - 1] == csoup[i] - 1))
+                        valid = 0;
+
+                } while (valid == 0);
+                // SAME AS FIRST
+                do
+                {
+                    valid = 1;
+                    psoup[i] = (rand() % (57 + 1 - 48)) + 48;
+                    if ((psoup[i - 1] == psoup[i]) || (psoup[i - 1] == psoup[i] + 1) || (psoup[i - 1] == psoup[i] - 1))
+                        valid = 0;
+
+                } while (valid == 0);
+            }
+        }
+
+        // Size doubles if I don't t=do this
+        csoup[10] = '\0';
+        psoup[10] = '\0';
+
+        // Vars for interface
+        char cMatches[SOUPSIZE] = "----------";
+        char pMatches[SOUPSIZE] = "----------";
+        int pMatch = 0;
+        int cMatch = 0;
+
+        // print scores and prompt continue
+
+        printf("%s, match points: %d round points: %d\n", name, pTotMtcScr, pRndScr);
+        printf("Computer, match points: %d round points: %d\n\n", cTotMtcScr, cRndScr);
+        if (round == 1)
+            printf("[Play]");
+        else
+            printf("[Contiune]");
+        getchar(); // pauses until return is pressed
+
+        // print current soup
+        printf("\nRound: %d/10\nSoup: [%s]\nSoup Code: ", round, soup);
+        printSoupCode(soup);
+        printf("\n************************************\n");
+
+        pMatch = calcPoints(psoup, soup, pMatches);
+
+        // Player stats
+        printf("%s's soup: [%s]\nSoup Code: ", name, psoup);
+        printSoupCode(psoup);
+        printf("Match: %d [%s]\n\n", pMatch, pMatches);
+
+        cMatch = calcPoints(csoup, soup, cMatches);
+
+        // Computer Stats
+        printf("Computer's soup: [%s]\nSoup Code: ", csoup);
+        printSoupCode(csoup);
+        printf("Match: %d [%s]\n", cMatch, cMatches);
+
+        // if tie +2 for both round score
+        if (pMatch == cMatch)
+        {
+            cRndScr += 2;
+            pRndScr += 2;
+        }
+        else if (pMatch > cMatch) // if player wins +5 to player round score
+            pRndScr += 5;
+        else // if computer wins
+            cRndScr += 5;
+
+        // add round matches to total match score
+        pTotMtcScr += pMatch;
+        cTotMtcScr += cMatch;
+        // increment round
+        round++;
+    }
+    // exit score and winner decalres
+    int pTot = pTotMtcScr + pRndScr;
+    int cTot = cTotMtcScr + cRndScr;
+    printf("\n%s, score:%d \n     match points: %d round points: %d\n", name, pTot, pTotMtcScr, pRndScr);
+    printf("\nComputer's, score:%d \n     match points: %d round points: %d\n", cTot, cTotMtcScr, cRndScr);
+    if (cTot == pTot)
+        printf("\nIt is a Tie");
+    else if (cTot > pTot)
+        printf("Computer Wins");
+    else
+        printf("%s Wins", name);
+}
+
+//
+int menu()
+{
+
+    int input;
+    char name[26], buffer[4];
+    // Ensure the name is empty on first run
+    name[strlen(name) - 1] = 0;
+
+    short valid = 1;
+
+    do
+    {
+        printf("\n*****************************\n");
+        printf("* Welcome to Character Soup *\n");
+        printf("*****************************\n");
+
+        // If name != null setname
+        if (name[0] == '\0')
+            set_name(name);
+
+        // remove a \n that appears
+        if (name[strlen(name) - 1] == '\n')
+            name[strlen(name) - 1] = 0;
+
+        printf("\nPlayer Name: %s\n", name);
+
+        printf("1) Mixed Soup\n2) Alphabet Soup\n3) Number Soup\n4) Quit\n");
+        // menu selction
+        do
+        {
+            printf("Select an Option: ");
+            fgets(buffer, 3, stdin);
+            sscanf(buffer, "%d", &input);
+
+            valid = is_Valid_Input(input);
+        } while (valid == 0);
+
+        // input cases
+        if (input == 4)
+        {
+            return 0;
+        }
+        else if (input == 1)
+        {
+            mixed_soup(name);
+        }
+        else if (input == 2)
+        {
+            alphabet_soup(name);
+        }
+        else if (input == 3)
+        {
+            number_soup(name);
+        }
+
+    } while (valid != -1);
+
+    return 0;
+}
+
+int main()
+{
+    // SEED generator
+    srand(time(NULL));
+    return menu();
+}
+bash-4.4$ cat m[KMakefile 
+#Jared Singh, G01416039
+
+#CS 262, Lab Section 201
+#P1
+CC = gcc
+LIBS = -lm
+TARGET = p1_jsingh51_201
+CFLAGS = -g -Wall -std=c99 -pedantic-errors
+all: $(TARGET).c
+	$(CC) $(TARGET).c -o $(TARGET) $(CFLAGS) $(LIBS)
+project1: $(TARGET).c
+	$(CC) $(TARGET).c -o $(TARGET) $(CFLAGS) $(LIBS)
+clean:
+	rm $(TARGET)
+bash-4.4$ ma[K[Kmake clae[K[Kean
+rm p1_jsingh51_201
+bash-4.4$ make
+gcc p1_jsingh51_201.c -o p1_jsingh51_201 -g -Wall -std=c99 -pedantic-errors -lm
+bash-4.4$ sl[K[Kls
+Makefile  p1_jsingh51_201  p1_jsingh51_201.c  p1_typescript_jsingh51_201
+bash-4.4$ ./p1_jsingh51_201 
+
+*****************************
+* Welcome to Character Soup *
+*****************************
+Please Enter Your Name: Ja!
+Please Enter Your Name: Jaew  red Sinfh  gh
+
+Player Name: Jared Singh
+1) Mixed Soup
+2) Alphabet Soup
+3) Number Soup
+4) Quit
+Select an Option: 0
+Option 0, is not an option
+Select an Option: 5
+Option 5, is not an option
+Select an Option: 3
+
+****************************
+*       Number Soup        *
+****************************
+Jared Singh, match points: 0 round points: 0
+Computer, match points: 0 round points: 0
+
+[Play]
+
+Round: 1/10
+Soup: [9275968596ÿ]
+Soup Code: [57 50 55 53 57 54 56 53 57 54 ]
+
+************************************
+Jared Singh's soup: [7372752694]
+Soup Code: [55 51 55 50 55 53 50 54 57 52 ]
+Match: 2 [--X-----X-]
+
+Computer's soup: [9275862085]
+Soup Code: [57 50 55 53 56 54 50 48 56 53 ]
+Match: 5 [XXXX-X----]
+Jared Singh, match points: 2 round points: 0
+Computer, match points: 5 round points: 5
+
+[Contiune]
+
+Round: 2/10
+Soup: [3816262838ÿ]
+Soup Code: [51 56 49 54 50 54 50 56 51 56 ]
+
+************************************
+Jared Singh's soup: [2608392635]
+Soup Code: [50 54 48 56 51 57 50 54 51 53 ]
+Match: 2 [------X-X-]
+
+Computer's soup: [9405907470]
+Soup Code: [57 52 48 53 57 48 55 52 55 48 ]
+Match: 0 [----------]
+Jared Singh, match points: 4 round points: 5
+Computer, match points: 5 round points: 5
+
+[Contiune]
+
+Round: 3/10
+Soup: [3905715930ÿ]
+Soup Code: [51 57 48 53 55 49 53 57 51 48 ]
+
+************************************
+Jared Singh's soup: [1428583042]
+Soup Code: [49 52 50 56 53 56 51 48 52 50 ]
+Match: 0 [----------]
+
+Computer's soup: [9704241816]
+Soup Code: [57 55 48 52 50 52 49 56 49 54 ]
+Match: 1 [--X-------]
+Jared Singh, match points: 4 round points: 5
+Computer, match points: 6 round points: 10
+
+[Contiune]
+
+Round: 4/10
+Soup: [8364836209ÿ]
+Soup Code: [56 51 54 52 56 51 54 50 48 57 ]
+
+************************************
+Jared Singh's soup: [7272081715]
+Soup Code: [55 50 55 50 48 56 49 55 49 53 ]
+Match: 0 [----------]
+
+Computer's soup: [3169681572]
+Soup Code: [51 49 54 57 54 56 49 53 55 50 ]
+Match: 1 [--X-------]
+Jared Singh, match points: 4 round points: 5
+Computer, match points: 7 round points: 15
+
+[Contiune]
+
+Round: 5/10
+Soup: [8427929753ÿ]
+Soup Code: [56 52 50 55 57 50 57 55 53 51 ]
+
+************************************
+Jared Singh's soup: [0747929053]
+Soup Code: [48 55 52 55 57 50 57 48 53 51 ]
+Match: 6 [---XXXX-XX]
+
+Computer's soup: [3973624717]
+Soup Code: [51 57 55 51 54 50 52 55 49 55 ]
+Match: 2 [-----X-X--]
+Jared Singh, match points: 10 round points: 10
+Computer, match points: 9 round points: 15
+
+[Contiune]
+
+Round: 6/10
+Soup: [7028406091ÿ]
+Soup Code: [55 48 50 56 52 48 54 48 57 49 ]
+
+************************************
+Jared Singh's soup: [2506358394]
+Soup Code: [50 53 48 54 51 53 56 51 57 52 ]
+Match: 1 [--------X-]
+
+Computer's soup: [0730630739]
+Soup Code: [48 55 51 48 54 51 48 55 51 57 ]
+Match: 0 [----------]
+Jared Singh, match points: 11 round points: 15
+Computer, match points: 9 round points: 15
+
+[Contiune]
+
+Round: 7/10
+Soup: [5740368241ÿ]
+Soup Code: [53 55 52 48 51 54 56 50 52 49 ]
+
+************************************
+Jared Singh's soup: [4251684746]
+Soup Code: [52 50 53 49 54 56 52 55 52 54 ]
+Match: 1 [--------X-]
+
+Computer's soup: [6081940913]
+Soup Code: [54 48 56 49 57 52 48 57 49 51 ]
+Match: 0 [----------]
+Jared Singh, match points: 12 round points: 20
+Computer, match points: 9 round points: 15
+
+[Contiune]
+
+Round: 8/10
+Soup: [2825930397ÿ]
+Soup Code: [50 56 50 53 57 51 48 51 57 55 ]
+
+************************************
+Jared Singh's soup: [4249060818]
+Soup Code: [52 50 52 57 48 54 48 56 49 56 ]
+Match: 1 [------X---]
+
+Computer's soup: [1709384703]
+Soup Code: [49 55 48 57 51 56 52 55 48 51 ]
+Match: 0 [----------]
+Jared Singh, match points: 13 round points: 25
+Computer, match points: 9 round points: 15
+
+[Contiune]
+
+Round: 9/10
+Soup: [9271471695ÿ]
+Soup Code: [57 50 55 49 52 55 49 54 57 53 ]
+
+************************************
+Jared Singh's soup: [8648405739]
+Soup Code: [56 54 52 56 52 48 53 55 51 57 ]
+Match: 1 [----X-----]
+
+Computer's soup: [6029491915]
+Soup Code: [54 48 50 57 52 57 49 57 49 53 ]
+Match: 3 [----X-X--X]
+Jared Singh, match points: 14 round points: 25
+Computer, match points: 12 round points: 20
+
+[Contiune]
+
+Round: 10/10
+Soup: [3181503819ÿ]
+Soup Code: [51 49 56 49 53 48 51 56 49 57 ]
+
+************************************
+Jared Singh's soup: [7086838182]
+Soup Code: [55 48 56 54 56 51 56 49 56 50 ]
+Match: 1 [--X-------]
+
+Computer's soup: [8314680972]
+Soup Code: [56 51 49 52 54 56 48 57 55 50 ]
+Match: 0 [----------]
+
+Jared Singh, score:45 
+     match points: 15 round points: 30
+
+Computer's, score:32 
+     match points: 12 round points: 20
+Jared Singh Wins
+*****************************
+* Welcome to Character Soup *
+*****************************
+
+Player Name: Jared Singh
+1) Mixed Soup
+2) Alphabet Soup
+3) Number Soup
+4) Quit
+Select an Option: 4
+bash-4.4$ exit
+exit
+
+Script done on 2024-03-01 10:07:44-05:00

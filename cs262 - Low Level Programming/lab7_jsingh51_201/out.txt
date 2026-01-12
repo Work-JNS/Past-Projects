@@ -1,0 +1,6 @@
+Iron Man            1134970   9.97    CS500     4  5  
+Captain America     1156731   8.79    CS262     3  2  
+Black Widow         1070965   8.35    CS310     3  3  
+Clint Barton        1133656   6.89    CS440     4  5  
+Nick Fury           1259273   4.68    CS101     2  1  
+Wanda Maximoff      1284367   7.98    CS367     4  3  

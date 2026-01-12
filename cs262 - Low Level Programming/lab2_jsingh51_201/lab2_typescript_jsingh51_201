@@ -1,0 +1,97 @@
+Script started on 2024-01-26 09:46:28-05:00
+bash-4.4$ uname -a
+Linux zeus-2.cec.gmu.edu 4.18.0-348.23.1.el8_5.x86_64 #1 SMP Tue Apr 12 11:20:32 EDT 2022 x86_64 x86_64 x86_64 GNU/Linux
+bash-4.4$ ls
+cs110_unix  CS262  lab2_typescript_jsingh51_201
+bash-4.4$ cd c[KCS262/lab2_jsingh51_jsingh[K[K[K[K[K[K201
+bash-4.4$ ls
+lab2_jsingh51_201.c  Makefile
+bash-4.4$ cat lab2_jsingh51_201.c 
+/*
+ * Jared Singh, G01416039
+ * CS 262, Lab Section 201
+ *
+ *
+ * Lab2: BSA calculator
+ *
+ * NOTICE: COMPILE WITH -lm arg
+ *
+ */
+
+
+#include <stdio.h>
+#include <math.h>
+
+
+int main(){
+	
+	
+	float weight = 0, height = 0, surfArea;
+	char in[8];
+
+	
+	printf("Enter your height(cm): ");
+	
+	//takes in 8 chars from terminal
+	fgets(in, 8, stdin);
+	//scans the input for a float
+	sscanf(in, "%f", &height);
+	
+	printf("Enter your weight(kgs): ");
+	
+	fgets(in, 8, stdin);
+	sscanf(in, "%f", &weight);
+	
+	//calculate surface area
+	surfArea = 0.007184 * pow(weight, 0.425) * pow(height, 0.725);
+	
+	//print results to console
+	printf("Height of %0.1fcm\nWeight of %0.1fkgs\nBSA: %0.4fm2\n", height, weight, surfArea);
+	
+	
+	
+	
+}
+
+bash-4.4$ cat ma[K[K[K mak[K[K[KMakefile 
+#Jared Singh, G01416039
+#CS 262, Lab Section 201
+#Lab2
+CC = gcc
+CFLAGS = -g -Wall -std=c99 -pedantic-errors
+LIBS = -lm
+all: lab2_jsingh51_201.c
+	$(CC) lab2_jsingh51_201.c -o lab2_jsingh51_201 $(CFLAGS) $(LIBS) 
+clean:
+	rm lab2_jsingh51_201
+
+
+bash-4.4$ make all
+gcc lab2_jsingh51_201.c -o lab2_jsingh51_201 -g -Wall -std=c99 -pedantic-errors -lm 
+bash-4.4$ ls
+lab2_jsingh51_201  lab2_jsingh51_201.c	Makefile
+bash-4.4$ ./lab2_jsingh51_201 
+Enter your height(cm): 150.5
+Enter your weight(kgs): 180.3
+Height of 150.5cm
+Weight of 180.3kgs
+BSA: 2.4767m2
+bash-4.4$ ./lab2_jsingh51_201 [C[C[C[C[C[C[C[C[C[Cls[K./lab2_jsingh51_201 
+Enter your height(cm): 100.7
+Enter your weight(kgs): 167.3
+Height of 100.7cm
+Weight of 167.3kgs
+BSA: 1.7929m2
+bash-4.4$ ./lab2_jsingh51_201 
+Enter your height(cm): 98
+Enter your weight(kgs): 210
+Height of 98.0cm
+Weight of 210.0kgs
+BSA: 1.9362m2
+bash-4.4$ make cla[Kwe[K[Kwa[K[Kena[K[K[Kean
+rm lab2_jsingh51_201
+bash-4.4$ ls
+lab2_jsingh51_201.c  Makefile
+bash-4.4$ exit
+
+Script done on 2024-01-26 09:49:14-05:00

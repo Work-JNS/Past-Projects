@@ -1,0 +1,398 @@
+Script started on 2024-04-21 21:40:44-04:00
+bash-4.4$ unale[K[Kme -a
+Linux zeus-1.cec.gmu.edu 4.18.0-348.23.1.el8_5.x86_64 #1 SMP Tue Apr 12 11:20:32 EDT 2022 x86_64 x86_64 x86_64 GNU/Linux
+bash-4.4$ pwed[K[Kd
+/home/jsingh51/CS262/p3_jsingh51_201/handout
+bash-4.4$ ls
+driver.py  inc	inputs	Makefile  obj  outputs	p3_typescript_jsingh51_201  silverhand.txt  src
+bash-4.4$ cat [K[K[K[Kcd src/
+bash-4.4$ cat shell.c 
+/*
+	Jared Singh, G01416039
+	CS 262, Lab Section 201
+	Project 3
+
+	CS262 shell
+
+*/
+
+#include "fork.h"
+#include <stdlib.h>
+#include <stdio.h>
+#include <string.h>
+#include <unistd.h>
+#define LINESIZE 10000
+
+// frees all memory in a command
+Command *freeNode(Command *node)
+{
+	free(node->command);
+	for (int i = 0; i < node->arguments_length + 1; i++)
+	{
+		free(node->arguments[i]);
+	}
+	free(node->arguments);
+	free(node);
+	return NULL;
+}
+
+// formats char* to Command - Works
+Command *makeCommand(char line[], int histSize)
+{
+	// create cmd pointer
+	Command *cmd = malloc(sizeof(Command));
+	int argc = 0;
+
+	// init size & max args len
+	cmd->next = NULL;
+	cmd->index = histSize;
+
+	cmd->arguments = malloc(sizeof(char *) * MAX_ARGS);
+
+	char *temp = strtok(line, " ");
+
+	while (temp != NULL)
+	{
+		if (argc < MAX_ARGS)
+		{
+			// init & populate each arg
+			if (temp != NULL)
+			{
+				cmd->arguments[argc] = malloc(sizeof(char) * strlen(temp) + 1);
+				strcpy(cmd->arguments[argc], temp);
+				temp = strtok(NULL, " ");
+				argc++;
+			}
+		}
+		else
+		{
+			// if args exceeded - print err & free cmd
+			fprintf(stderr, "error: %s\n", "too many arguments");
+			freeNode(cmd);
+			return NULL;
+		}
+	}
+	// final population of command struct
+	cmd->arguments_length = argc;
+
+	cmd->command = malloc(sizeof(char) * (strlen(cmd->arguments[0]) + 1));
+	strcpy(cmd->command, cmd->arguments[0]);
+
+	// ret pointer
+	return cmd;
+}
+
+// cd /directory/
+void cDir(char *Dir)
+{
+	// make directory immutable
+	char dir[40];
+	sprintf(dir, "%s", Dir);
+	// run chdir & print err
+	if (chdir(dir) != 0)
+	{
+		perror("error");
+	}
+}
+
+// works
+Command *addHistory(Command *cmd, Command *histHead)
+{
+	// init history
+	if (histHead == NULL)
+	{
+		return cmd;
+	}
+	// append cmd to hist
+	Command *temp = histHead;
+
+	while (temp->next != NULL)
+	{
+		temp = temp->next;
+	}
+	temp->next = cmd;
+	return histHead;
+}
+
+// history -c - Works
+Command *clrHist(Command *histHead)
+{
+	// quit if no hist
+	if (histHead == NULL)
+		return NULL;
+
+	// free all nodes in history
+	Command *prev = histHead;
+	histHead = histHead->next;
+	while (histHead != NULL)
+	{
+		prev = freeNode(prev);
+
+		prev = histHead;
+		histHead = histHead->next;
+	}
+	prev = freeNode(prev);
+	return NULL;
+}
+
+// history - works
+void printHist(Command *histHead)
+{
+	// print all nodes in history
+	Command *temp = histHead;
+	while (temp != NULL)
+	{
+		// print command
+		printf("%d: %s ", temp->index, temp->command);
+		// print args
+		for (int i = 1; i < temp->arguments_length + 1; i++)
+		{
+			if (temp->arguments[i] != NULL)
+				printf("%s", temp->arguments[i]);
+		}
+		printf("\n");
+		temp = temp->next;
+	}
+}
+
+// history %d - works
+Command *repHist(Command *histHead, int index, int histCount)
+{
+
+	Command *temp = histHead;
+
+	// get temp to index
+	for (int i = 0; i < histCount + 1; i++)
+	{
+
+		if (i == index)
+		{
+			// reconstruct full cmd line
+			char *x = malloc(sizeof(char) * LINESIZE);
+			strcpy(x, temp->command);
+			for (int i = 1; i < temp->arguments_length + 1; i++)
+			{
+				strcat(x, temp->arguments[i]);
+			}
+			// parse command
+			Command *cmd = makeCommand(x, histCount + 1);
+			// free alloc arr
+			free(x);
+			// ret new func
+			return cmd;
+		}
+		temp = temp->next;
+	}
+
+	// if index out of bounds
+	printf("Invalid Index: %d", index);
+	return NULL;
+}
+
+int main()
+{
+
+	// int vars
+	Command *head = NULL;
+	Command *cmd = NULL;
+	int histSize = 0;
+	int histCall = 0;
+	char line[LINESIZE];
+
+	printf("262$");
+
+	// get input
+	while (fgets(line, LINESIZE, stdin) != NULL)
+	{
+
+		histCall = 0;
+		fflush(stdout);
+		// remove \n
+		if (strlen(line) > 1)
+			line[strlen(line) - 1] = '\0';
+
+		// parse command
+		cmd = makeCommand(line, histSize);
+
+		if (strcmp(cmd->arguments[0], "history") == 0)
+		{
+
+			if (cmd->arguments_length > 1)
+			{
+				int index;
+
+				if (strcmp(cmd->arguments[1], "-c") == 0)
+				{
+					//clr hist & reset mangement vars
+					head = clrHist(head);
+					histSize = 0;
+					head = NULL;
+					cmd = freeNode(cmd);
+					histCall = 1;
+				}
+				else if (sscanf(cmd->arguments[1], "%d", &index) != 0)
+				{
+					//repeat command from history
+					cmd = freeNode(cmd);
+					cmd = repHist(head, index, histSize);
+				}
+			}
+			else
+			{
+				//print history
+				printHist(head);
+				cmd = freeNode(cmd);
+				histCall = 1;
+			}
+		}
+		if (histCall != 1)
+		{
+			//add cmd to history if not a history call
+			head = addHistory(cmd, head);
+			histSize++;
+
+			//cd case
+			if (strcmp(cmd->arguments[0], "cd") == 0)
+			{
+				cDir(cmd->arguments[1]);
+			}
+			//exit case
+			else if (strcmp(cmd->arguments[0], "exit") == 0)
+			{
+				// EXIT
+				clrHist(head);
+				return 1;
+			}
+			else
+			{
+				//sys call functions
+				if (cmd->command[0] != '/')
+					system(cmd->command);
+				else
+					call_exe(cmd);
+			}
+		}
+
+		printf("262$");
+		
+		//check Eof
+		if (feof(stdin))
+		{
+
+			// EXIT
+			head = clrHist(head);
+			return 1;
+		}
+	}
+	head = clrHist(head);
+	return 1;
+	// EXIT
+}
+bash-4.4$ cd..
+bash: cd..: command not found
+bash-4.4$ cd.. ..
+bash-4.4$ ls
+driver.py  inc	inputs	Makefile  obj  outputs	p3_typescript_jsingh51_201  silverhand.txt  src
+bash-4.4$ make clear[Kn
+rm cs262sh
+rm: cannot remove 'cs262sh': No such file or directory
+make: *** [Makefile:20: clean] Error 1
+bash-4.4$ make
+gcc -std=gnu99 -Wall -Werror -I./inc -g -c src/shell.c -o obj/shell.o
+gcc -std=gnu99 -Wall -Werror -I./inc -g -o cs262sh obj/shell.o obj/fork.o
+bash-4.4$ make clean
+rm cs262sh
+rm ./obj/shell.o
+bash-4.4$ python3 driver.py 
+['driver.py']
+Calling make
+b'gcc -std=gnu99 -Wall -Werror -I./inc -g -c src/shell.c -o obj/shell.o\ngcc -std=gnu99 -Wall -Werror -I./inc -g -o cs262sh obj/shell.o obj/fork.o\n'
+Trying input file: p1-args
+Your Output:
+262$4 inputs/data/long
+262$
+============OK!=============
+>Trying again with Valgrind:
+Your Output:
+b"==2412460== Memcheck, a memory error detector\n==2412460== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.\n==2412460== Using Valgrind-3.17.0 and LibVEX; rerun with -h for copyright info\n==2412460== Command: ./cs262sh\n==2412460== \n262$==2412590== Syscall param execve(argv) points to uninitialised byte(s)\n==2412590==    at 0x4F0F05B: execve (syscall-template.S:78)\n==2412590==    by 0x401453: call_exe (in /home/jsingh51/CS262/p3_jsingh51_201/handout/cs262sh)\n==2412590==    by 0x4013AB: main (shell.c:263)\n==2412590==  Address 0x520e138 is 24 bytes inside a block of size 1,024 alloc'd\n==2412590==    at 0x4C360A5: malloc (vg_replace_malloc.c:380)\n==2412590==    by 0x400D61: makeCommand (shell.c:41)\n==2412590==    by 0x4011EC: main (shell.c:206)\n==2412590== \n4 inputs/data/long\n==2412460== Conditional jump or move depends on uninitialised value(s)\n==2412460==    at 0x4C389B6: free (vg_replace_malloc.c:755)\n==2412460==    by 0x400CE9: freeNode (shell.c:23)\n==2412460==    by 0x400F97: clrHist (shell.c:125)\n==2412460==    by 0x401414: main (shell.c:278)\n==2412460== \n262$==2412460== \n==2412460== HEAP SUMMARY:\n==2412460==     in use at exit: 0 bytes in 0 blocks\n==2412460==   total heap usage: 8 allocs, 8 frees, 13,388 bytes allocated\n==2412460== \n==2412460== All heap blocks were freed -- no leaks are possible\n==2412460== \n==2412460== Use --track-origins=yes to see where uninitialised values come from\n==2412460== For lists of detected and suppressed errors, rerun with: -s\n==2412460== ERROR SUMMARY: 1 errors from 1 contexts (suppressed: 0 from 0)\n"
+Trying input file: p1-hello
+Your Output:
+262$hello
+262$
+============OK!=============
+>Trying again with Valgrind:
+Your Output:
+b"==2412601== Memcheck, a memory error detector\n==2412601== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.\n==2412601== Using Valgrind-3.17.0 and LibVEX; rerun with -h for copyright info\n==2412601== Command: ./cs262sh\n==2412601== \n262$==2412748== Syscall param execve(argv) points to uninitialised byte(s)\n==2412748==    at 0x4F0F05B: execve (syscall-template.S:78)\n==2412748==    by 0x401453: call_exe (in /home/jsingh51/CS262/p3_jsingh51_201/handout/cs262sh)\n==2412748==    by 0x4013AB: main (shell.c:263)\n==2412748==  Address 0x520e130 is 16 bytes inside a block of size 1,024 alloc'd\n==2412748==    at 0x4C360A5: malloc (vg_replace_malloc.c:380)\n==2412748==    by 0x400D61: makeCommand (shell.c:41)\n==2412748==    by 0x4011EC: main (shell.c:206)\n==2412748== \nhello\n==2412601== Conditional jump or move depends on uninitialised value(s)\n==2412601==    at 0x4C389B6: free (vg_replace_malloc.c:755)\n==2412601==    by 0x400CE9: freeNode (shell.c:23)\n==2412601==    by 0x400F97: clrHist (shell.c:125)\n==2412601==    by 0x401414: main (shell.c:278)\n==2412601== \n262$==2412601== \n==2412601== HEAP SUMMARY:\n==2412601==     in use at exit: 0 bytes in 0 blocks\n==2412601==   total heap usage: 7 allocs, 7 frees, 13,370 bytes allocated\n==2412601== \n==2412601== All heap blocks were freed -- no leaks are possible\n==2412601== \n==2412601== Use --track-origins=yes to see where uninitialised values come from\n==2412601== For lists of detected and suppressed errors, rerun with: -s\n==2412601== ERROR SUMMARY: 1 errors from 1 contexts (suppressed: 0 from 0)\n"
+Trying input file: p1-many-args
+Your Output:
+262$Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc eget turpis at turpis dapibus rutrum. Vivamus ut sem bibendum, vestibulum lacus eu, fermentum metus. Aenean non ex at nisl sagittis dignissim non mollis tellus. Aenean eget sagittis lorem. Fusce a erat ac nulla ullamcorper luctus ac et lacus. Aenean pharetra eu mauris eget ultrices. Fusce venenatis mauris diam, non placerat mauris vestibulum in. Sed eleifend in turpis vitae mattis. Morbi nec velit eu sapien luctus lobortis. Quisque nec neque ex. Sed lobortis diam id justo viverra aliquet quis non nunc. Duis nunc nunc, viverra eu tellus eget, auctor efficitur felis. Suspendisse quis tincidunt nibh. Praesent vulputate sit amet arcu a luctus. Aliquam ultrices ultricies tempus. Curabitur at malesuada ante, ac rhoncus nunc. Mauris auctor nulla a justo.
+262$262$262$
+============OK!=============
+>Trying again with Valgrind:
+Your Output:
+b"==2412804== Memcheck, a memory error detector\n==2412804== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.\n==2412804== Using Valgrind-3.17.0 and LibVEX; rerun with -h for copyright info\n==2412804== Command: ./cs262sh\n==2412804== \n262$==2412906== Syscall param execve(argv) points to unaddressable byte(s)\n==2412906==    at 0x4F0F05B: execve (syscall-template.S:78)\n==2412906==    by 0x401453: call_exe (in /home/jsingh51/CS262/p3_jsingh51_201/handout/cs262sh)\n==2412906==    by 0x4013AB: main (shell.c:263)\n==2412906==  Address 0x520e520 is 0 bytes after a block of size 1,024 alloc'd\n==2412906==    at 0x4C360A5: malloc (vg_replace_malloc.c:380)\n==2412906==    by 0x400D61: makeCommand (shell.c:41)\n==2412906==    by 0x4011EC: main (shell.c:206)\n==2412906== \nLorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc eget turpis at turpis dapibus rutrum. Vivamus ut sem bibendum, vestibulum lacus eu, fermentum metus. Aenean non ex at nisl sagittis dignissim non mollis tellus. Aenean eget sagittis lorem. Fusce a erat ac nulla ullamcorper luctus ac et lacus. Aenean pharetra eu mauris eget ultrices. Fusce venenatis mauris diam, non placerat mauris vestibulum in. Sed eleifend in turpis vitae mattis. Morbi nec velit eu sapien luctus lobortis. Quisque nec neque ex. Sed lobortis diam id justo viverra aliquet quis non nunc. Duis nunc nunc, viverra eu tellus eget, auctor efficitur felis. Suspendisse quis tincidunt nibh. Praesent vulputate sit amet arcu a luctus. Aliquam ultrices ultricies tempus. Curabitur at malesuada ante, ac rhoncus nunc. Mauris auctor nulla a justo.\n262$262$==2412804== Invalid read of size 8\n==2412804==    at 0x400CDF: freeNode (shell.c:23)\n==2412804==    by 0x400F6C: clrHist (shell.c:120)\n==2412804==    by 0x401414: main (shell.c:278)\n==2412804==  Address 0x520e520 is 0 bytes after a block of size 1,024 alloc'd\n==2412804==    at 0x4C360A5: malloc (vg_replace_malloc.c:380)\n==2412804==    by 0x400D61: makeCommand (shell.c:41)\n==2412804==    by 0x4011EC: main (shell.c:206)\n==2412804== \n==2412804== Conditional jump or move depends on uninitialised value(s)\n==2412804==    at 0x4C389B6: free (vg_replace_malloc.c:755)\n==2412804==    by 0x400CE9: freeNode (shell.c:23)\n==2412804==    by 0x400F6C: clrHist (shell.c:120)\n==2412804==    by 0x401414: main (shell.c:278)\n==2412804== \n==2412804== Conditional jump or move depends on uninitialised value(s)\n==2412804==    at 0x4C389B6: free (vg_replace_malloc.c:755)\n==2412804==    by 0x400CE9: freeNode (shell.c:23)\n==2412804==    by 0x400F97: clrHist (shell.c:125)\n==2412804==    by 0x401414: main (shell.c:278)\n==2412804== \n262$==2412804== \n==2412804== HEAP SUMMARY:\n==2412804==     in use at exit: 0 bytes in 0 blocks\n==2412804==   total heap usage: 141 allocs, 141 frees, 16,304 bytes allocated\n==2412804== \n==2412804== All heap blocks were freed -- no leaks are possible\n==2412804== \n==2412804== Use --track-origins=yes to see where uninitialised values come from\n==2412804== For lists of detected and suppressed errors, rerun with: -s\n==2412804== ERROR SUMMARY: 3 errors from 3 contexts (suppressed: 0 from 0)\n"
+Trying input file: p1-prompt
+Your Output:
+262$262$262$
+============OK!=============
+>Trying again with Valgrind:
+Your Output:
+b"==2412914== Memcheck, a memory error detector\n==2412914== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.\n==2412914== Using Valgrind-3.17.0 and LibVEX; rerun with -h for copyright info\n==2412914== Command: ./cs262sh\n==2412914== \n262$262$==2412914== Conditional jump or move depends on uninitialised value(s)\n==2412914==    at 0x4C389B6: free (vg_replace_malloc.c:755)\n==2412914==    by 0x400CE9: freeNode (shell.c:23)\n==2412914==    by 0x400F6C: clrHist (shell.c:120)\n==2412914==    by 0x401414: main (shell.c:278)\n==2412914== \n==2412914== Conditional jump or move depends on uninitialised value(s)\n==2412914==    at 0x4C389B6: free (vg_replace_malloc.c:755)\n==2412914==    by 0x400CE9: freeNode (shell.c:23)\n==2412914==    by 0x400F97: clrHist (shell.c:125)\n==2412914==    by 0x401414: main (shell.c:278)\n==2412914== \n262$==2412914== \n==2412914== HEAP SUMMARY:\n==2412914==     in use at exit: 0 bytes in 0 blocks\n==2412914==   total heap usage: 10 allocs, 10 frees, 14,408 bytes allocated\n==2412914== \n==2412914== All heap blocks were freed -- no leaks are possible\n==2412914== \n==2412914== Use --track-origins=yes to see where uninitialised values come from\n==2412914== For lists of detected and suppressed errors, rerun with: -s\n==2412914== ERROR SUMMARY: 2 errors from 2 contexts (suppressed: 0 from 0)\n"
+Trying input file: p2-cd
+Your Output:
+262$262$a
+b
+c
+d
+e
+long
+262$
+============OK!=============
+>Trying again with Valgrind:
+Your Output:
+b"==2413097== Memcheck, a memory error detector\n==2413097== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.\n==2413097== Using Valgrind-3.17.0 and LibVEX; rerun with -h for copyright info\n==2413097== Command: ./cs262sh\n==2413097== \n262$262$==2413274== Syscall param execve(argv) points to uninitialised byte(s)\n==2413274==    at 0x4F0F05B: execve (syscall-template.S:78)\n==2413274==    by 0x401453: call_exe (in /home/jsingh51/CS262/p3_jsingh51_201/handout/cs262sh)\n==2413274==    by 0x4013AB: main (shell.c:263)\n==2413274==  Address 0x520e6b8 is 8 bytes inside a block of size 1,024 alloc'd\n==2413274==    at 0x4C360A5: malloc (vg_replace_malloc.c:380)\n==2413274==    by 0x400D61: makeCommand (shell.c:41)\n==2413274==    by 0x4011EC: main (shell.c:206)\n==2413274== \na\nb\nc\nd\ne\nlong\n==2413097== Conditional jump or move depends on uninitialised value(s)\n==2413097==    at 0x4C389B6: free (vg_replace_malloc.c:755)\n==2413097==    by 0x400CE9: freeNode (shell.c:23)\n==2413097==    by 0x400F6C: clrHist (shell.c:120)\n==2413097==    by 0x401414: main (shell.c:278)\n==2413097== \n==2413097== Conditional jump or move depends on uninitialised value(s)\n==2413097==    at 0x4C389B6: free (vg_replace_malloc.c:755)\n==2413097==    by 0x400CE9: freeNode (shell.c:23)\n==2413097==    by 0x400F97: clrHist (shell.c:125)\n==2413097==    by 0x401414: main (shell.c:278)\n==2413097== \n262$==2413097== \n==2413097== HEAP SUMMARY:\n==2413097==     in use at exit: 0 bytes in 0 blocks\n==2413097==   total heap usage: 11 allocs, 11 frees, 14,434 bytes allocated\n==2413097== \n==2413097== All heap blocks were freed -- no leaks are possible\n==2413097== \n==2413097== Use --track-origins=yes to see where uninitialised values come from\n==2413097== For lists of detected and suppressed errors, rerun with: -s\n==2413097== ERROR SUMMARY: 2 errors from 2 contexts (suppressed: 0 from 0)\n"
+Trying input file: p2-exit
+Your Output:
+262$
+============OK!=============
+>Trying again with Valgrind:
+Your Output:
+b"==2413278== Memcheck, a memory error detector\n==2413278== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.\n==2413278== Using Valgrind-3.17.0 and LibVEX; rerun with -h for copyright info\n==2413278== Command: ./cs262sh\n==2413278== \n262$==2413278== Conditional jump or move depends on uninitialised value(s)\n==2413278==    at 0x4C389B6: free (vg_replace_malloc.c:755)\n==2413278==    by 0x400CE9: freeNode (shell.c:23)\n==2413278==    by 0x400F97: clrHist (shell.c:125)\n==2413278==    by 0x401376: main (shell.c:254)\n==2413278== \n==2413278== \n==2413278== HEAP SUMMARY:\n==2413278==     in use at exit: 0 bytes in 0 blocks\n==2413278==   total heap usage: 6 allocs, 6 frees, 13,354 bytes allocated\n==2413278== \n==2413278== All heap blocks were freed -- no leaks are possible\n==2413278== \n==2413278== Use --track-origins=yes to see where uninitialised values come from\n==2413278== For lists of detected and suppressed errors, rerun with: -s\n==2413278== ERROR SUMMARY: 1 errors from 1 contexts (suppressed: 0 from 0)\n"
+Trying input file: p2-history
+Your Output:
+262$a
+b
+c
+d
+e
+long
+262$a
+262$0: /bin/ls inputs/data
+1: /bin/cat inputs/data/a
+262$
+============OK!=============
+>Trying again with Valgrind:
+Your Output:
+b"==2413408== Memcheck, a memory error detector\n==2413408== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.\n==2413408== Using Valgrind-3.17.0 and LibVEX; rerun with -h for copyright info\n==2413408== Command: ./cs262sh\n==2413408== \n262$==2413517== Syscall param execve(argv) points to uninitialised byte(s)\n==2413517==    at 0x4F0F05B: execve (syscall-template.S:78)\n==2413517==    by 0x401453: call_exe (in /home/jsingh51/CS262/p3_jsingh51_201/handout/cs262sh)\n==2413517==    by 0x4013AB: main (shell.c:263)\n==2413517==  Address 0x520e130 is 16 bytes inside a block of size 1,024 alloc'd\n==2413517==    at 0x4C360A5: malloc (vg_replace_malloc.c:380)\n==2413517==    by 0x400D61: makeCommand (shell.c:41)\n==2413517==    by 0x4011EC: main (shell.c:206)\n==2413517== \na\nb\nc\nd\ne\nlong\n262$==2413523== Syscall param execve(argv) points to uninitialised byte(s)\n==2413523==    at 0x4F0F05B: execve (syscall-template.S:78)\n==2413523==    by 0x401453: call_exe (in /home/jsingh51/CS262/p3_jsingh51_201/handout/cs262sh)\n==2413523==    by 0x4013AB: main (shell.c:263)\n==2413523==  Address 0x520e6c0 is 16 bytes inside a block of size 1,024 alloc'd\n==2413523==    at 0x4C360A5: malloc (vg_replace_malloc.c:380)\n==2413523==    by 0x400D61: makeCommand (shell.c:41)\n==2413523==    by 0x4011EC: main (shell.c:206)\n==2413523== \na\n262$==2413408== Conditional jump or move depends on uninitialised value(s)\n==2413408==    at 0x400FFF: printHist (shell.c:141)\n==2413408==    by 0x4012DD: main (shell.c:234)\n==2413408== \n==2413408== Conditional jump or move depends on uninitialised value(s)\n==2413408==    at 0x4C389B6: free (vg_replace_malloc.c:755)\n==2413408==    by 0x400CE9: freeNode (shell.c:23)\n==2413408==    by 0x4012E9: main (shell.c:235)\n==2413408== \n==2413408== Conditional jump or move depends on uninitialised value(s)\n==2413408==    at 0x4C389B6: free (vg_replace_malloc.c:755)\n==2413408==    by 0x400CE9: freeNode (shell.c:23)\n==2413408==    by 0x400F6C: clrHist (shell.c:120)\n==2413408==    by 0x401414: main (shell.c:278)\n==2413408== \n==2413408== Conditional jump or move depends on uninitialised value(s)\n==2413408==    at 0x4C389B6: free (vg_replace_malloc.c:755)\n==2413408==    by 0x400CE9: freeNode (shell.c:23)\n==2413408==    by 0x400F97: clrHist (shell.c:125)\n==2413408==    by 0x401414: main (shell.c:278)\n==2413408== \n0: /bin/ls inputs/data\n1: /bin/cat inputs/data/a\n262$==2413408== \n==2413408== HEAP SUMMARY:\n==2413408==     in use at exit: 0 bytes in 0 blocks\n==2413408==   total heap usage: 16 allocs, 16 frees, 15,532 bytes allocated\n==2413408== \n==2413408== All heap blocks were freed -- no leaks are possible\n==2413408== \n==2413408== Use --track-origins=yes to see where uninitialised values come from\n==2413408== For lists of detected and suppressed errors, rerun with: -s\n==2413408== ERROR SUMMARY: 5 errors from 4 contexts (suppressed: 0 from 0)\n"
+Trying input file: p2-history-clear
+Your Output:
+262$a
+262$one
+262$0: /bin/cat inputs/data/a
+1: /bin/echo one
+262$262$262$two
+262$0: /bin/echo two
+262$0: /bin/echo two
+262$
+============OK!=============
+>Trying again with Valgrind:
+Your Output:
+b"==2413531== Memcheck, a memory error detector\n==2413531== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.\n==2413531== Using Valgrind-3.17.0 and LibVEX; rerun with -h for copyright info\n==2413531== Command: ./cs262sh\n==2413531== \n262$==2413781== Syscall param execve(argv) points to uninitialised byte(s)\n==2413781==    at 0x4F0F05B: execve (syscall-template.S:78)\n==2413781==    by 0x401453: call_exe (in /home/jsingh51/CS262/p3_jsingh51_201/handout/cs262sh)\n==2413781==    by 0x4013AB: main (shell.c:263)\n==2413781==  Address 0x520e130 is 16 bytes inside a block of size 1,024 alloc'd\n==2413781==    at 0x4C360A5: malloc (vg_replace_malloc.c:380)\n==2413781==    by 0x400D61: makeCommand (shell.c:41)\n==2413781==    by 0x4011EC: main (shell.c:206)\n==2413781== \na\n262$==2413782== Syscall param execve(argv) points to uninitialised byte(s)\n==2413782==    at 0x4F0F05B: execve (syscall-template.S:78)\n==2413782==    by 0x401453: call_exe (in /home/jsingh51/CS262/p3_jsingh51_201/handout/cs262sh)\n==2413782==    by 0x4013AB: main (shell.c:263)\n==2413782==  Address 0x520e6c0 is 16 bytes inside a block of size 1,024 alloc'd\n==2413782==    at 0x4C360A5: malloc (vg_replace_malloc.c:380)\n==2413782==    by 0x400D61: makeCommand (shell.c:41)\n==2413782==    by 0x4011EC: main (shell.c:206)\n==2413782== \none\n262$==2413531== Conditional jump or move depends on uninitialised value(s)\n==2413531==    at 0x400FFF: printHist (shell.c:141)\n==2413531==    by 0x4012DD: main (shell.c:234)\n==2413531== \n==2413531== Conditional jump or move depends on uninitialised value(s)\n==2413531==    at 0x4C389B6: free (vg_replace_malloc.c:755)\n==2413531==    by 0x400CE9: freeNode (shell.c:23)\n==2413531==    by 0x4012E9: main (shell.c:235)\n==2413531== \n0: /bin/cat inputs/data/a\n1: /bin/echo one\n262$==2413531== Conditional jump or move depends on uninitialised value(s)\n==2413531==    at 0x4C389B6: free (vg_replace_malloc.c:755)\n==2413531==    by 0x400CE9: freeNode (shell.c:23)\n==2413531==    by 0x400F6C: clrHist (shell.c:120)\n==2413531==    by 0x40124C: main (shell.c:218)\n==2413531== \n==2413531== Conditional jump or move depends on uninitialised value(s)\n==2413531==    at 0x4C389B6: free (vg_replace_malloc.c:755)\n==2413531==    by 0x400CE9: freeNode (shell.c:23)\n==2413531==    by 0x400F97: clrHist (shell.c:125)\n==2413531==    by 0x40124C: main (shell.c:218)\n==2413531== \n==2413531== Conditional jump or move depends on uninitialised value(s)\n==2413531==    at 0x4C389B6: free (vg_replace_malloc.c:755)\n==2413531==    by 0x400CE9: freeNode (shell.c:23)\n==2413531==    by 0x40126B: main (shell.c:221)\n==2413531== \n262$262$==2413783== Syscall param execve(argv) points to uninitialised byte(s)\n==2413783==    at 0x4F0F05B: execve (syscall-template.S:78)\n==2413783==    by 0x401453: call_exe (in /home/jsingh51/CS262/p3_jsingh51_201/handout/cs262sh)\n==2413783==    by 0x4013AB: main (shell.c:263)\n==2413783==  Address 0x520fc60 is 16 bytes inside a block of size 1,024 alloc'd\n==2413783==    at 0x4C360A5: malloc (vg_replace_malloc.c:380)\n==2413783==    by 0x400D61: makeCommand (shell.c:41)\n==2413783==    by 0x4011EC: main (shell.c:206)\n==2413783== \ntwo\n262$0: /bin/echo two\n262$==2413531== Conditional jump or move depends on uninitialised value(s)\n==2413531==    at 0x4C389B6: free (vg_replace_malloc.c:755)\n==2413531==    by 0x400CE9: freeNode (shell.c:23)\n==2413531==    by 0x400F97: clrHist (shell.c:125)\n==2413531==    by 0x401414: main (shell.c:278)\n==2413531== \n0: /bin/echo two\n262$==2413531== \n==2413531== HEAP SUMMARY:\n==2413531==     in use at exit: 0 bytes in 0 blocks\n==2413531==   total heap usage: 38 allocs, 38 frees, 20,899 bytes allocated\n==2413531== \n==2413531== All heap blocks were freed -- no leaks are possible\n==2413531== \n==2413531== Use --track-origins=yes to see where uninitialised values come from\n==2413531== For lists of detected and suppressed errors, rerun with: -s\n==2413531== ERROR SUMMARY: 12 errors from 6 contexts (suppressed: 0 from 0)\n"
+{"scores": {"compiles": 2, "p1-args": 2, "p1-hello": 2, "p1-many-args": 2, "p1-prompt": 2, "p2-cd": 2, "p2-exit": 2, "p2-history": 2, "p2-history-clear": 2}}
+rm cs262sh
+rm ./obj/shell.o
+cs262sh: no process found
+bash-4.4$ quit[K[K[K[Kexit
+exit
+
+Script done on 2024-04-21 21:42:23-04:00
