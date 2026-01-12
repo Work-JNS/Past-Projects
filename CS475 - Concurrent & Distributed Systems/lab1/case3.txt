@@ -1,0 +1,422 @@
+Enter the number of delays: 0
+Enter the amount of vehicles in group #1(all groups must add up to 30): 30
+enter the probability of a vehicle being a car (0.2 for 0.2 chance of being car & 0.8 for truck): 0.8
+
+vehicle #0 (Southbound, Type: Car) arrived
+
+
+vehicle #0 is crossing the bridge...
+Bridge State:
+|#0, (Southbound, Car)|
+Total Weight: 100/750
+Northbound Waiters: []
+Southbound Waiters:[]
+
+
+vehicle #1 (Southbound, Type: Car) arrived
+
+
+vehicle #1 is crossing the bridge...
+Bridge State:
+|#0, (Southbound, Car)||#1, (Southbound, Car)|
+Total Weight: 200/750
+Northbound Waiters: []
+Southbound Waiters:[]
+
+
+vehicle #15 (Northbound, Type: Car) arrived
+
+
+vehicle #4 (Northbound, Type: Car) arrived
+
+
+vehicle #5 (Northbound, Type: Car) arrived
+
+
+vehicle #6 (Northbound, Type: Car) arrived
+
+
+vehicle #7 (Northbound, Type: Truck) arrived
+
+
+vehicle #9 (Northbound, Type: Truck) arrived
+
+
+vehicle #14 (Northbound, Type: Car) arrived
+
+
+vehicle #17 (Northbound, Type: Truck) arrived
+
+
+vehicle #18 (Northbound, Type: Truck) arrived
+
+
+vehicle #21 (Northbound, Type: Car) arrived
+
+
+vehicle #29 (Southbound, Type: Car) arrived
+
+
+vehicle #29 is crossing the bridge...
+Bridge State:
+|#0, (Southbound, Car)||#1, (Southbound, Car)||#29, (Southbound, Car)|
+Total Weight: 300/750
+Northbound Waiters: [#15 (Type: Car) #4 (Type: Car) #5 (Type: Car) #6 (Type: Car) #7 (Type: Truck) #9 (Type: Truck) #14 (Type: Car) #17 (Type: Truck) #18 (Type: Truck) #21 (Type: Car) #23 (Type: Car) ]
+Southbound Waiters:[]
+
+
+vehicle #23 (Northbound, Type: Car) arrived
+
+
+vehicle #24 (Northbound, Type: Car) arrived
+
+
+vehicle #25 (Northbound, Type: Car) arrived
+
+
+vehicle #26 (Northbound, Type: Car) arrived
+
+
+vehicle #27 (Northbound, Type: Car) arrived
+
+
+vehicle #28 (Northbound, Type: Car) arrived
+
+
+vehicle #13 (Northbound, Type: Car) arrived
+
+
+vehicle #2 (Southbound, Type: Car) arrived
+
+
+vehicle #2 is crossing the bridge...
+Bridge State:
+|#0, (Southbound, Car)||#1, (Southbound, Car)||#29, (Southbound, Car)||#2, (Southbound, Car)|
+Total Weight: 400/750
+Northbound Waiters: [#15 (Type: Car) #4 (Type: Car) #5 (Type: Car) #6 (Type: Car) #7 (Type: Truck) #9 (Type: Truck) #14 (Type: Car) #17 (Type: Truck) #18 (Type: Truck) #21 (Type: Car) #23 (Type: Car) #24 (Type: Car) #25 (Type: Car) #26 (Type: Car) #27 (Type: Car) #28 (Type: Car) #13 (Type: Car) ]
+Southbound Waiters:[]
+
+
+vehicle #3 (Southbound, Type: Car) arrived
+
+
+vehicle #3 is crossing the bridge...
+Bridge State:
+|#0, (Southbound, Car)||#1, (Southbound, Car)||#29, (Southbound, Car)||#2, (Southbound, Car)||#3, (Southbound, Car)|
+Total Weight: 500/750
+Northbound Waiters: [#15 (Type: Car) #4 (Type: Car) #5 (Type: Car) #6 (Type: Car) #7 (Type: Truck) #9 (Type: Truck) #14 (Type: Car) #17 (Type: Truck) #18 (Type: Truck) #21 (Type: Car) #23 (Type: Car) #24 (Type: Car) #25 (Type: Car) #26 (Type: Car) #27 (Type: Car) #28 (Type: Car) #13 (Type: Car) ]
+Southbound Waiters:[]
+
+
+vehicle #8 (Southbound, Type: Car) arrived
+
+
+vehicle #8 is crossing the bridge...
+Bridge State:
+|#0, (Southbound, Car)||#1, (Southbound, Car)||#29, (Southbound, Car)||#2, (Southbound, Car)||#3, (Southbound, Car)||#8, (Southbound, Car)|
+Total Weight: 600/750
+Northbound Waiters: [#15 (Type: Car) #4 (Type: Car) #5 (Type: Car) #6 (Type: Car) #7 (Type: Truck) #9 (Type: Truck) #14 (Type: Car) #17 (Type: Truck) #18 (Type: Truck) #21 (Type: Car) #23 (Type: Car) #24 (Type: Car) #25 (Type: Car) #26 (Type: Car) #27 (Type: Car) #28 (Type: Car) #13 (Type: Car) ]
+Southbound Waiters:[]
+
+
+vehicle #22 (Southbound, Type: Car) arrived
+
+
+vehicle #16 (Southbound, Type: Car) arrived
+
+
+vehicle #19 (Southbound, Type: Truck) arrived
+
+
+vehicle #20 (Southbound, Type: Car) arrived
+
+
+vehicle #10 (Southbound, Type: Car) arrived
+
+
+vehicle #12 (Southbound, Type: Car) arrived
+
+
+vehicle #11 (Southbound, Type: Car) arrived
+
+
+vehicle #2 has exited the bridge. Total Weight: 500
+
+
+vehicle #3 has exited the bridge. Total Weight: 400
+
+
+vehicle #8 has exited the bridge. Total Weight: 300
+
+
+vehicle #1 has exited the bridge. Total Weight: 200
+
+
+vehicle #29 has exited the bridge. Total Weight: 100
+
+
+vehicle #0 has exited the bridge. Total Weight: 0
+
+
+vehicle #15 is crossing the bridge...
+Bridge State:
+|#15, (Northbound, Car)|
+Total Weight: 100/750
+Northbound Waiters: [#4 (Type: Car) #5 (Type: Car) #6 (Type: Car) #7 (Type: Truck) #9 (Type: Truck) #14 (Type: Car) #17 (Type: Truck) #18 (Type: Truck) #21 (Type: Car) #23 (Type: Car) #24 (Type: Car) #25 (Type: Car) #26 (Type: Car) #27 (Type: Car) #28 (Type: Car) #13 (Type: Car) ]
+Southbound Waiters:[#22 (Type: Car) #16 (Type: Car) #19 (Type: Truck) #20 (Type: Car) #10 (Type: Car) #12 (Type: Car) #11 (Type: Car) ]
+
+
+vehicle #4 is crossing the bridge...
+Bridge State:
+|#15, (Northbound, Car)||#4, (Northbound, Car)|
+Total Weight: 200/750
+Northbound Waiters: [#5 (Type: Car) #6 (Type: Car) #7 (Type: Truck) #9 (Type: Truck) #14 (Type: Car) #17 (Type: Truck) #18 (Type: Truck) #21 (Type: Car) #23 (Type: Car) #24 (Type: Car) #25 (Type: Car) #26 (Type: Car) #27 (Type: Car) #28 (Type: Car) #13 (Type: Car) ]
+Southbound Waiters:[#22 (Type: Car) #16 (Type: Car) #19 (Type: Truck) #20 (Type: Car) #10 (Type: Car) #12 (Type: Car) #11 (Type: Car) ]
+
+
+vehicle #5 is crossing the bridge...
+Bridge State:
+|#15, (Northbound, Car)||#4, (Northbound, Car)||#5, (Northbound, Car)|
+Total Weight: 300/750
+Northbound Waiters: [#6 (Type: Car) #7 (Type: Truck) #9 (Type: Truck) #14 (Type: Car) #17 (Type: Truck) #18 (Type: Truck) #21 (Type: Car) #23 (Type: Car) #24 (Type: Car) #25 (Type: Car) #26 (Type: Car) #27 (Type: Car) #28 (Type: Car) #13 (Type: Car) ]
+Southbound Waiters:[#22 (Type: Car) #16 (Type: Car) #19 (Type: Truck) #20 (Type: Car) #10 (Type: Car) #12 (Type: Car) #11 (Type: Car) ]
+
+
+vehicle #6 is crossing the bridge...
+Bridge State:
+|#15, (Northbound, Car)||#4, (Northbound, Car)||#5, (Northbound, Car)||#6, (Northbound, Car)|
+Total Weight: 400/750
+Northbound Waiters: [#7 (Type: Truck) #9 (Type: Truck) #14 (Type: Car) #17 (Type: Truck) #18 (Type: Truck) #21 (Type: Car) #23 (Type: Car) #24 (Type: Car) #25 (Type: Car) #26 (Type: Car) #27 (Type: Car) #28 (Type: Car) #13 (Type: Car) ]
+Southbound Waiters:[#22 (Type: Car) #16 (Type: Car) #19 (Type: Truck) #20 (Type: Car) #10 (Type: Car) #12 (Type: Car) #11 (Type: Car) ]
+
+
+vehicle #7 is crossing the bridge...
+Bridge State:
+|#15, (Northbound, Car)||#4, (Northbound, Car)||#5, (Northbound, Car)||#6, (Northbound, Car)||#7, (Northbound, Truck)|
+Total Weight: 600/750
+Northbound Waiters: [#9 (Type: Truck) #14 (Type: Car) #17 (Type: Truck) #18 (Type: Truck) #21 (Type: Car) #23 (Type: Car) #24 (Type: Car) #25 (Type: Car) #26 (Type: Car) #27 (Type: Car) #28 (Type: Car) #13 (Type: Car) ]
+Southbound Waiters:[#22 (Type: Car) #16 (Type: Car) #19 (Type: Truck) #20 (Type: Car) #10 (Type: Car) #12 (Type: Car) #11 (Type: Car) ]
+
+
+vehicle #7 has exited the bridge. Total Weight: 400
+
+
+vehicle #9 is crossing the bridge...
+Bridge State:
+|#15, (Northbound, Car)||#4, (Northbound, Car)||#5, (Northbound, Car)||#6, (Northbound, Car)||#9, (Northbound, Truck)|
+Total Weight: 600/750
+Northbound Waiters: [#14 (Type: Car) #17 (Type: Truck) #18 (Type: Truck) #21 (Type: Car) #23 (Type: Car) #24 (Type: Car) #25 (Type: Car) #26 (Type: Car) #27 (Type: Car) #28 (Type: Car) #13 (Type: Car) ]
+Southbound Waiters:[#22 (Type: Car) #16 (Type: Car) #19 (Type: Truck) #20 (Type: Car) #10 (Type: Car) #12 (Type: Car) #11 (Type: Car) ]
+
+
+vehicle #5 has exited the bridge. Total Weight: 500
+
+
+vehicle #15 has exited the bridge. Total Weight: 400
+
+
+vehicle #4 has exited the bridge. Total Weight: 300
+
+
+vehicle #6 has exited the bridge. Total Weight: 200
+
+
+vehicle #9 has exited the bridge. Total Weight: 0
+
+
+vehicle #22 is crossing the bridge...
+Bridge State:
+|#22, (Southbound, Car)|
+Total Weight: 100/750
+Northbound Waiters: [#14 (Type: Car) #17 (Type: Truck) #18 (Type: Truck) #21 (Type: Car) #23 (Type: Car) #24 (Type: Car) #25 (Type: Car) #26 (Type: Car) #27 (Type: Car) #28 (Type: Car) #13 (Type: Car) ]
+Southbound Waiters:[#16 (Type: Car) #19 (Type: Truck) #20 (Type: Car) #10 (Type: Car) #12 (Type: Car) #11 (Type: Car) ]
+
+
+vehicle #16 is crossing the bridge...
+Bridge State:
+|#22, (Southbound, Car)||#16, (Southbound, Car)|
+Total Weight: 200/750
+Northbound Waiters: [#14 (Type: Car) #17 (Type: Truck) #18 (Type: Truck) #21 (Type: Car) #23 (Type: Car) #24 (Type: Car) #25 (Type: Car) #26 (Type: Car) #27 (Type: Car) #28 (Type: Car) #13 (Type: Car) ]
+Southbound Waiters:[#19 (Type: Truck) #20 (Type: Car) #10 (Type: Car) #12 (Type: Car) #11 (Type: Car) ]
+
+
+vehicle #19 is crossing the bridge...
+Bridge State:
+|#22, (Southbound, Car)||#16, (Southbound, Car)||#19, (Southbound, Truck)|
+Total Weight: 400/750
+Northbound Waiters: [#14 (Type: Car) #17 (Type: Truck) #18 (Type: Truck) #21 (Type: Car) #23 (Type: Car) #24 (Type: Car) #25 (Type: Car) #26 (Type: Car) #27 (Type: Car) #28 (Type: Car) #13 (Type: Car) ]
+Southbound Waiters:[#20 (Type: Car) #10 (Type: Car) #12 (Type: Car) #11 (Type: Car) ]
+
+
+vehicle #20 is crossing the bridge...
+Bridge State:
+|#22, (Southbound, Car)||#16, (Southbound, Car)||#19, (Southbound, Truck)||#20, (Southbound, Car)|
+Total Weight: 500/750
+Northbound Waiters: [#14 (Type: Car) #17 (Type: Truck) #18 (Type: Truck) #21 (Type: Car) #23 (Type: Car) #24 (Type: Car) #25 (Type: Car) #26 (Type: Car) #27 (Type: Car) #28 (Type: Car) #13 (Type: Car) ]
+Southbound Waiters:[#10 (Type: Car) #12 (Type: Car) #11 (Type: Car) ]
+
+
+vehicle #10 is crossing the bridge...
+Bridge State:
+|#22, (Southbound, Car)||#16, (Southbound, Car)||#19, (Southbound, Truck)||#20, (Southbound, Car)||#10, (Southbound, Car)|
+Total Weight: 600/750
+Northbound Waiters: [#14 (Type: Car) #17 (Type: Truck) #18 (Type: Truck) #21 (Type: Car) #23 (Type: Car) #24 (Type: Car) #25 (Type: Car) #26 (Type: Car) #27 (Type: Car) #28 (Type: Car) #13 (Type: Car) ]
+Southbound Waiters:[#12 (Type: Car) #11 (Type: Car) ]
+
+
+vehicle #12 is crossing the bridge...
+Bridge State:
+|#22, (Southbound, Car)||#16, (Southbound, Car)||#19, (Southbound, Truck)||#20, (Southbound, Car)||#10, (Southbound, Car)||#12, (Southbound, Car)|
+Total Weight: 700/750
+Northbound Waiters: [#14 (Type: Car) #17 (Type: Truck) #18 (Type: Truck) #21 (Type: Car) #23 (Type: Car) #24 (Type: Car) #25 (Type: Car) #26 (Type: Car) #27 (Type: Car) #28 (Type: Car) #13 (Type: Car) ]
+Southbound Waiters:[#11 (Type: Car) ]
+
+
+vehicle #12 has exited the bridge. Total Weight: 600
+
+
+vehicle #22 has exited the bridge. Total Weight: 500
+
+
+vehicle #16 has exited the bridge. Total Weight: 400
+
+
+vehicle #19 has exited the bridge. Total Weight: 200
+
+
+vehicle #20 has exited the bridge. Total Weight: 100
+
+
+vehicle #10 has exited the bridge. Total Weight: 0
+
+
+vehicle #14 is crossing the bridge...
+Bridge State:
+|#14, (Northbound, Car)|
+Total Weight: 100/750
+Northbound Waiters: [#17 (Type: Truck) #18 (Type: Truck) #21 (Type: Car) #23 (Type: Car) #24 (Type: Car) #25 (Type: Car) #26 (Type: Car) #27 (Type: Car) #28 (Type: Car) #13 (Type: Car) ]
+Southbound Waiters:[#11 (Type: Car) ]
+
+
+vehicle #17 is crossing the bridge...
+Bridge State:
+|#14, (Northbound, Car)||#17, (Northbound, Truck)|
+Total Weight: 300/750
+Northbound Waiters: [#18 (Type: Truck) #21 (Type: Car) #23 (Type: Car) #24 (Type: Car) #25 (Type: Car) #26 (Type: Car) #27 (Type: Car) #28 (Type: Car) #13 (Type: Car) ]
+Southbound Waiters:[#11 (Type: Car) ]
+
+
+vehicle #18 is crossing the bridge...
+Bridge State:
+|#14, (Northbound, Car)||#17, (Northbound, Truck)||#18, (Northbound, Truck)|
+Total Weight: 500/750
+Northbound Waiters: [#21 (Type: Car) #23 (Type: Car) #24 (Type: Car) #25 (Type: Car) #26 (Type: Car) #27 (Type: Car) #28 (Type: Car) #13 (Type: Car) ]
+Southbound Waiters:[#11 (Type: Car) ]
+
+
+vehicle #21 is crossing the bridge...
+Bridge State:
+|#14, (Northbound, Car)||#17, (Northbound, Truck)||#18, (Northbound, Truck)||#21, (Northbound, Car)|
+Total Weight: 600/750
+Northbound Waiters: [#23 (Type: Car) #24 (Type: Car) #25 (Type: Car) #26 (Type: Car) #27 (Type: Car) #28 (Type: Car) #13 (Type: Car) ]
+Southbound Waiters:[#11 (Type: Car) ]
+
+
+vehicle #23 is crossing the bridge...
+Bridge State:
+|#14, (Northbound, Car)||#17, (Northbound, Truck)||#18, (Northbound, Truck)||#21, (Northbound, Car)||#23, (Northbound, Car)|
+Total Weight: 700/750
+Northbound Waiters: [#24 (Type: Car) #25 (Type: Car) #26 (Type: Car) #27 (Type: Car) #28 (Type: Car) #13 (Type: Car) ]
+Southbound Waiters:[#11 (Type: Car) ]
+
+
+vehicle #23 has exited the bridge. Total Weight: 600
+
+
+vehicle #24 is crossing the bridge...
+Bridge State:
+|#14, (Northbound, Car)||#17, (Northbound, Truck)||#18, (Northbound, Truck)||#21, (Northbound, Car)||#24, (Northbound, Car)|
+Total Weight: 700/750
+Northbound Waiters: [#25 (Type: Car) #26 (Type: Car) #27 (Type: Car) #28 (Type: Car) #13 (Type: Car) ]
+Southbound Waiters:[#11 (Type: Car) ]
+
+
+vehicle #18 has exited the bridge. Total Weight: 500
+
+
+vehicle #21 has exited the bridge. Total Weight: 400
+
+
+vehicle #14 has exited the bridge. Total Weight: 300
+
+
+vehicle #17 has exited the bridge. Total Weight: 100
+
+
+vehicle #24 has exited the bridge. Total Weight: 0
+
+
+vehicle #11 is crossing the bridge...
+Bridge State:
+|#11, (Southbound, Car)|
+Total Weight: 100/750
+Northbound Waiters: [#25 (Type: Car) #26 (Type: Car) #27 (Type: Car) #28 (Type: Car) #13 (Type: Car) ]
+Southbound Waiters:[]
+
+
+vehicle #11 has exited the bridge. Total Weight: 0
+
+
+vehicle #25 is crossing the bridge...
+Bridge State:
+|#25, (Northbound, Car)|
+Total Weight: 100/750
+Northbound Waiters: [#26 (Type: Car) #27 (Type: Car) #28 (Type: Car) #13 (Type: Car) ]
+Southbound Waiters:[]
+
+
+vehicle #26 is crossing the bridge...
+Bridge State:
+|#25, (Northbound, Car)||#26, (Northbound, Car)|
+Total Weight: 200/750
+Northbound Waiters: [#27 (Type: Car) #28 (Type: Car) #13 (Type: Car) ]
+Southbound Waiters:[]
+
+
+vehicle #27 is crossing the bridge...
+Bridge State:
+|#25, (Northbound, Car)||#26, (Northbound, Car)||#27, (Northbound, Car)|
+Total Weight: 300/750
+Northbound Waiters: [#28 (Type: Car) #13 (Type: Car) ]
+Southbound Waiters:[]
+
+
+vehicle #28 is crossing the bridge...
+Bridge State:
+|#25, (Northbound, Car)||#26, (Northbound, Car)||#27, (Northbound, Car)||#28, (Northbound, Car)|
+Total Weight: 400/750
+Northbound Waiters: [#13 (Type: Car) ]
+Southbound Waiters:[]
+
+
+vehicle #13 is crossing the bridge...
+Bridge State:
+|#25, (Northbound, Car)||#26, (Northbound, Car)||#27, (Northbound, Car)||#28, (Northbound, Car)||#13, (Northbound, Car)|
+Total Weight: 500/750
+Northbound Waiters: []
+Southbound Waiters:[]
+
+
+vehicle #13 has exited the bridge. Total Weight: 400
+
+
+vehicle #25 has exited the bridge. Total Weight: 300
+
+
+vehicle #26 has exited the bridge. Total Weight: 200
+
+
+vehicle #28 has exited the bridge. Total Weight: 100
+
+
+vehicle #27 has exited the bridge. Total Weight: 0

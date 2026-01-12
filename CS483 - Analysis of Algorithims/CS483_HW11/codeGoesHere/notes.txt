@@ -1,0 +1,9 @@
+To test the flow code, edit the main method to provide the graph you want (there are samples there). Then compile with:
+
+javac *.java
+
+And run with:
+
+java Flow
+
+on the command line from the folder containing your code (you must have Java installed along with a JDK).

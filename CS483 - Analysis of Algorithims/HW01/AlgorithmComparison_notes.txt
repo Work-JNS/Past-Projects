@@ -1,0 +1,5 @@
+Linear Search: Finds an item in a list. Time Complexity: O(N)
+Binary Search: Finds an Item in a SORTED list. Time Complexity: O(log(N))
+Selection Sort: Sorts a list. Time Complexity: O(N^2)
+
+

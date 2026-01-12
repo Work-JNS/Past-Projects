@@ -1,0 +1,116 @@
+$> my-dns-client gmu.edu
+Preparing DNS query
+Contacting DNS server
+Sending DNS query
+DNS Response Received: (Attempt 0 of 3)
+Processing DNS response
+---------------------------------------------------
+header.id = 1716
+header.QR = 32768
+header.Opcode = 0
+header.authoritative_answer = 0
+header.truncated = 0
+header.RD = 256
+question.QNAME = gmu.edu
+question.QTYPE = 1
+question.QCLASS = 1
+answer.NAME = gmu.edu
+answer.TYPE = 1
+answer.CLASS = 1
+answer.RDATA = 129.174.134.28
+
+
+$> my-dns-client google.com
+Preparing DNS query
+Contacting DNS server
+Sending DNS query
+DNS Response Received: (Attempt 0 of 3)
+Processing DNS response
+---------------------------------------------------
+header.id = 39476
+header.QR = 32768
+header.Opcode = 0
+header.authoritative_answer = 0
+header.truncated = 0
+header.RD = 256
+question.QNAME = google.com
+question.QTYPE = 1
+question.QCLASS = 1
+answer.NAME = google.com
+answer.TYPE = 1
+answer.CLASS = 1
+answer.RDATA = 142.251.111.100
+answer.NAME = google.com
+answer.TYPE = 1
+answer.CLASS = 1
+answer.RDATA = 142.251.111.113
+answer.NAME = google.com
+answer.TYPE = 1
+answer.CLASS = 1
+answer.RDATA = 142.251.111.102
+answer.NAME = google.com
+answer.TYPE = 1
+answer.CLASS = 1
+answer.RDATA = 142.251.111.139
+answer.NAME = google.com
+answer.TYPE = 1
+answer.CLASS = 1
+answer.RDATA = 142.251.111.138
+answer.NAME = google.com
+answer.TYPE = 1
+answer.CLASS = 1
+answer.RDATA = 142.251.111.101
+
+
+$> my-dns-client outlook.com
+Preparing DNS query
+Contacting DNS server
+Sending DNS query
+DNS Response Received: (Attempt 0 of 3)
+Processing DNS response
+---------------------------------------------------
+header.id = 33555
+header.QR = 32768
+header.Opcode = 0
+header.authoritative_answer = 0
+header.truncated = 0
+header.RD = 256
+question.QNAME = outlook.com
+question.QTYPE = 1
+question.QCLASS = 1
+answer.NAME = outlook.com
+answer.TYPE = 1
+answer.CLASS = 1
+answer.RDATA = 52.96.91.34
+answer.NAME = outlook.com
+answer.TYPE = 1
+answer.CLASS = 1
+answer.RDATA = 52.96.228.130
+answer.NAME = outlook.com
+answer.TYPE = 1
+answer.CLASS = 1
+answer.RDATA = 52.96.172.98
+answer.NAME = outlook.com
+answer.TYPE = 1
+answer.CLASS = 1
+answer.RDATA = 52.96.223.2
+answer.NAME = outlook.com
+answer.TYPE = 1
+answer.CLASS = 1
+answer.RDATA = 52.96.111.82
+answer.NAME = outlook.com
+answer.TYPE = 1
+answer.CLASS = 1
+answer.RDATA = 52.96.229.242
+answer.NAME = outlook.com
+answer.TYPE = 1
+answer.CLASS = 1
+answer.RDATA = 52.96.214.50
+answer.NAME = outlook.com
+answer.TYPE = 1
+answer.CLASS = 1
+answer.RDATA = 52.96.222.226
+answer.NAME = outlook.com
+answer.TYPE = 1
+answer.CLASS = 1
+answer.RDATA = 52.96.222.194
